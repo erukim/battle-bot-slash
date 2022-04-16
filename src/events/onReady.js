@@ -35,6 +35,7 @@ const NFTGuildVerifySchema_1 = __importDefault(require("../schemas/NFTGuildVerif
 const axios_1 = __importDefault(require("axios"));
 const config_1 = __importDefault(require("../../config"));
 const CommandManager_1 = __importDefault(require("../managers/CommandManager"));
+const premiumUserSchemas_1 = __importDefault(require("../schemas/premiumUserSchemas"));
 const logger = new Logger_1.default('bot');
 exports.default = new Event_1.Event('ready', (client) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -98,10 +99,11 @@ exports.default = new Event_1.Event('ready', (client) => __awaiter(void 0, void 
         PremiumAlert(client);
         automodResetChannel(client);
         nftChecker(client);
+        PremiumPersonAlert(client);
     });
-    logger.info(`Logged ${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username}`);
     const commandManager = new CommandManager_1.default(client);
     yield commandManager.slashGlobalCommandSetup();
+    logger.info(`Logged ${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username}`);
 }), { once: true });
 function MusicTrackEvent(client, queue, musicDB) {
     var _a, _b;
@@ -212,6 +214,38 @@ function PremiumAlert(client) {
             if (lastDate === 0) {
                 embed.setDescription(`${premiumguild.name} 서버의 프리미엄이 만료되었습니다`);
                 return user.send({ embeds: [embed] });
+            }
+        });
+    });
+}
+function PremiumPersonAlert(client) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const PremiumDB = yield premiumUserSchemas_1.default.find({});
+        PremiumDB.forEach((user) => {
+            var _a;
+            const users = client.users.cache.get(user.user_id);
+            if (!users)
+                return;
+            const embed = new Embed_1.default(client, 'info');
+            embed.setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 프리미엄`);
+            const now = new Date();
+            const lastDate = Math.round((Number(user.nextpay_date) - Number(now)) / 1000 / 60 / 60 / 24);
+            try {
+                if (lastDate === 7) {
+                    embed.setDescription(`${users.username}님의 프리미엄 만료일이 7일 (${DateFormatting_1.default._format(user.nextpay_date)}) 남았습니다`);
+                    return users.send({ embeds: [embed] });
+                }
+                if (lastDate === 1) {
+                    embed.setDescription(`${users.username} 서버의 프리미엄 만료일이 1일 (${DateFormatting_1.default._format(user.nextpay_date)}) 남았습니다`);
+                    return users.send({ embeds: [embed] });
+                }
+                if (lastDate === 0) {
+                    embed.setDescription(`${users.username} 서버의 프리미엄이 만료되었습니다`);
+                    return users.send({ embeds: [embed] });
+                }
+            }
+            catch (e) {
+                logger.error(e);
             }
         });
     });
