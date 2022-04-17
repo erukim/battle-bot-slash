@@ -363,16 +363,14 @@ function nftChecker(client) {
     });
 }
 function ServerCountUpdate(client) {
-    var _a, _b;
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
         const res = yield ((_a = client.shard) === null || _a === void 0 ? void 0 : _a.fetchClientValues('guilds.cache.size'));
         axios_1.default
             .post(`https://api.archiver.me/bots/${(_b = client.user) === null || _b === void 0 ? void 0 : _b.id}/server`, {
             servers: res === null || res === void 0 ? void 0 : res.reduce((acc, guilds) => Number(acc) + Number(guilds), 0)
         }, {
-            headers: {
-                Authorization: 'Bearer ' + config_1.default.updateServer.archive
-            }
+            headers: { Authorization: 'Bearer ' + config_1.default.updateServer.archive }
         })
             .then((data) => {
             logger.info('아카이브: 서버 수 업데이트 완료');
@@ -380,6 +378,20 @@ function ServerCountUpdate(client) {
             .catch((e) => {
             var _a;
             logger.error(`아카이브: 서버 수 업데이트 오류: ${(_a = e.response) === null || _a === void 0 ? void 0 : _a.data.message}`);
+        });
+        axios_1.default
+            .post(`https://koreanbots.dev/api/v2/bots/${(_c = client.user) === null || _c === void 0 ? void 0 : _c.id}/stats`, {
+            servers: res === null || res === void 0 ? void 0 : res.reduce((acc, guilds) => Number(acc) + Number(guilds), 0),
+            shards: (_d = client.shard) === null || _d === void 0 ? void 0 : _d.count
+        }, {
+            headers: { Authorization: config_1.default.updateServer.koreanbots }
+        })
+            .then((data) => {
+            logger.info('한디리: 서버 수 업데이트 완료');
+        })
+            .catch((e) => {
+            var _a;
+            logger.error(`한디리: 서버 수 업데이트 오류: ${(_a = e.response) === null || _a === void 0 ? void 0 : _a.data.message}`);
         });
     });
 }

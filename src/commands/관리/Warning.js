@@ -21,6 +21,7 @@ const Warning_1 = __importDefault(require("../../schemas/Warning"));
 let ObjectId = mongoose_1.default.Types.ObjectId;
 // @ts-ignore
 String.prototype.toObjectId = function () {
+    // @ts-ignore
     return new ObjectId(this.toString());
 };
 exports.default = new Command_1.BaseCommand({
@@ -106,6 +107,7 @@ exports.default = new Command_1.BaseCommand({
             }
             else if (subcommand === '차감') {
                 let warningID = interaction.options.getString('id');
+                // @ts-ignore
                 if (!ObjectId.isValid(warningID))
                     return interaction.editReply('찾을 수 없는 경고 아이디 입니다');
                 // @ts-ignore
