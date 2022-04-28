@@ -162,8 +162,10 @@ const AutoModTokenUserEvent = (client, member) => __awaiter(void 0, void 0, void
             const guildLastJoinUserDataMember = client.users.cache.get(guildLastJoinUserData);
             if (!guildLastJoinUserDataMember)
                 return;
-            if (member.user.createdAt.getDate() ===
-                guildLastJoinUserDataMember.createdAt.getDate()) {
+            if (member.user.createdAt.getMonth() ===
+                guildLastJoinUserDataMember.createdAt.getMonth() &&
+                member.user.createdAt.getDate() ===
+                    guildLastJoinUserDataMember.createdAt.getDate()) {
                 const embed = new Embed_1.default(client, 'error')
                     .setTitle('배틀이 자동 시스템')
                     .setDescription(`토큰 유저 의심 계정으로 추방되었습니다.\n**오류라고 생각될 경우 [여기](https://discord.gg/WtGq7D7BZm)로 문의해 주세요**`);
