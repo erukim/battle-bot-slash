@@ -20,6 +20,8 @@ const Embed_1 = __importDefault(require("../utils/Embed"));
 const Event_1 = require("../structures/Event");
 const Logger_1 = __importDefault(require("../utils/Logger"));
 const checkPremium_1 = __importDefault(require("../utils/checkPremium"));
+const guildLastJoin = new Map();
+const guildLastJoinUser = new Map();
 const log = new Logger_1.default('GuildMemberAddEvent');
 exports.default = new Event_1.Event('guildMemberAdd', (client, member) => __awaiter(void 0, void 0, void 0, function* () {
     WelecomEvent(client, member);
@@ -27,6 +29,7 @@ exports.default = new Event_1.Event('guildMemberAdd', (client, member) => __awai
     AutoModEvent(client, member);
     AutoModCreateAtEvent(client, member);
     AutoModAutoRoleEvent(client, member);
+    AutoModTokenUserEvent(client, member);
 }));
 const WelecomEvent = (client, member) => __awaiter(void 0, void 0, void 0, function* () {
     const WelcomeSettingDB = yield WelcomeSettingSchema_1.default.findOne({
@@ -139,5 +142,39 @@ const AutoModAutoRoleEvent = (client, member) => __awaiter(void 0, void 0, void 
     }
     catch (e) {
         return;
+    }
+});
+const AutoModTokenUserEvent = (client, member) => __awaiter(void 0, void 0, void 0, function* () {
+    if (member.guild.id !== '786153760824492062')
+        return;
+    const guildLastJoinData = guildLastJoin.get(member.guild.id);
+    const guildLastJoinUserData = guildLastJoinUser.get(member.guild.id);
+    if (!guildLastJoinData || !guildLastJoinUserData) {
+        guildLastJoin.set(member.guild.id, new Date());
+        guildLastJoinUser.set(member.guild.id, member.id);
+    }
+    else {
+        if (new Date().getTime() - guildLastJoinData.getTime() < 1000 &&
+            !member.avatar) {
+            const guildLastJoinUserData = guildLastJoinUser.get(member.guild.id);
+            if (member.id === guildLastJoinUserData)
+                return;
+            const guildLastJoinUserDataMember = client.users.cache.get(guildLastJoinUserData);
+            if (!guildLastJoinUserDataMember)
+                return;
+            if (member.user.createdAt.getDate() ===
+                guildLastJoinUserDataMember.createdAt.getDate()) {
+                const embed = new Embed_1.default(client, 'error')
+                    .setTitle('배틀이 자동 시스템')
+                    .setDescription(`토큰 유저 의심 계정으로 추방되었습니다.\n**오류라고 생각될 경우 [여기](https://discord.gg/WtGq7D7BZm)로 문의해 주세요**`);
+                try {
+                    yield member.send({ embeds: [embed] });
+                    yield member.kick();
+                }
+                catch (e) {
+                    log.error(e);
+                }
+            }
+        }
     }
 });
