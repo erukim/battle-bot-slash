@@ -32,18 +32,16 @@ exports.default = new Command_1.BaseCommand({
         errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
         return message.reply({ embeds: [errembed] });
     }
-    if (!((_a = message.member) === null || _a === void 0 ? void 0 : _a.permissions.has('MANAGE_CHANNELS'))) {
+    if (!((_a = message.member) === null || _a === void 0 ? void 0 : _a.permissions.has("MANAGE_CHANNELS"))) {
         errembed.setTitle('이 명령어를 사용할 권한이 없어요');
         return message.reply({ embeds: [errembed] });
     }
     let db = yield musicSchema_1.default.findOne({ guild_id: message.guild.id });
     if (!db) {
-        let musicChannel = yield message.guild.channels.create('battle-bot-music', { type: 'GUILD_TEXT' });
-        const row = new discord_js_1.MessageActionRow().addComponents(musicbutton_1.buttonList);
-        let msg = yield musicChannel.send({
-            embeds: [musicEmbed],
-            components: [row]
-        });
+        let musicChannel = yield message.guild.channels.create('battle-bot-music', { type: "GUILD_TEXT" });
+        const row = new discord_js_1.MessageActionRow()
+            .addComponents(musicbutton_1.buttonList);
+        let msg = yield musicChannel.send({ embeds: [musicEmbed], components: [row] });
         let musicdb = new musicSchema_1.default();
         musicdb.guild_id = message.guild.id;
         musicdb.channel_id = musicChannel.id;
@@ -81,18 +79,16 @@ exports.default = new Command_1.BaseCommand({
             let member = interaction.guild.members.cache.get(interaction.user.id);
             if (!member)
                 member = (yield interaction.guild.members.fetch(interaction.user.id));
-            if (!member.permissions.has('MANAGE_CHANNELS')) {
+            if (!member.permissions.has("MANAGE_CHANNELS")) {
                 errembed.setTitle('이 명령어를 사용할 권한이 없어요');
                 return interaction.editReply({ embeds: [errembed] });
             }
             let db = yield musicSchema_1.default.findOne({ guild_id: interaction.guild.id });
             if (!db) {
-                let musicChannel = yield interaction.guild.channels.create('battle-bot-music', { type: 'GUILD_TEXT' });
-                const row = new discord_js_1.MessageActionRow().addComponents(musicbutton_1.buttonList);
-                let msg = yield musicChannel.send({
-                    embeds: [musicEmbed],
-                    components: [row]
-                });
+                let musicChannel = yield interaction.guild.channels.create('battle-bot-music', { type: "GUILD_TEXT" });
+                const row = new discord_js_1.MessageActionRow()
+                    .addComponents(musicbutton_1.buttonList);
+                let msg = yield musicChannel.send({ embeds: [musicEmbed], components: [row] });
                 let musicdb = new musicSchema_1.default();
                 musicdb.guild_id = interaction.guild.id;
                 musicdb.channel_id = musicChannel.id;
