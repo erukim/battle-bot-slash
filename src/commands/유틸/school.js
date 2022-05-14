@@ -122,7 +122,7 @@ exports.default = new Command_1.BaseCommand({
             else {
                 let embed = new Embed_1.default(client, 'info')
                     .setTitle(`급식`)
-                    .setDescription(`학교 학교를 찾는중이에요...`);
+                    .setDescription(`학교를 찾는중이에요...`);
                 let msg = yield interaction.reply({ embeds: [embed] });
                 yield axios_1.default.get(`https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=${encodeURI(school)}`)
                     .then((d) => __awaiter(this, void 0, void 0, function* () {
@@ -130,7 +130,7 @@ exports.default = new Command_1.BaseCommand({
                     let data = d.data;
                     let embed = new Embed_1.default(client, 'info')
                         .setTitle(`급식`)
-                        .setDescription(`학교 학교 찾았어요 학교를 선택해 주세요!`);
+                        .setDescription(`학교를 찾았어요 학교를 선택해 주세요!`);
                     let row = new discord_js_1.MessageActionRow();
                     let select = new discord_js_1.MessageSelectMenu()
                         .setCustomId('school.meal')
