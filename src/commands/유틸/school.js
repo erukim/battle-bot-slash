@@ -40,7 +40,7 @@ exports.default = new Command_1.BaseCommand({
             let data = d.data;
             let embed = new Embed_1.default(client, 'info')
                 .setTitle(`급식`)
-                .setDescription(`학교 학교 찾았어요 학교를 선택해 주세요!`);
+                .setDescription(`학교를 찾았어요 학교를 선택해 주세요!`);
             let row = new discord_js_1.MessageActionRow();
             let select = new discord_js_1.MessageSelectMenu()
                 .setCustomId('school.meal')
@@ -78,7 +78,7 @@ exports.default = new Command_1.BaseCommand({
                             if (((_a = e.response) === null || _a === void 0 ? void 0 : _a.status) === 404) {
                                 let mealembed = new Embed_1.default(client, 'warn')
                                     .setTitle(`${value[2]} 급식`)
-                                    .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`);
+                                    .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...\n오늘이 휴일인가요?!`);
                                 yield i.reply({ embeds: [mealembed], components: [] });
                             }
                         }));
