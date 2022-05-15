@@ -285,9 +285,11 @@ const LevelSystem = (client, message) => __awaiter(void 0, void 0, void 0, funct
         if (!levelData || (levelData && levelData.currentXP < nextLevelXP))
             return yield levelSchema_1.default.findOneAndUpdate({ guild_id: message.guild.id, user_id: message.author.id }, { $inc: { totalXP: xpToAdd, currentXP: xpToAdd } }, { upsert: true });
         const newData = yield levelSchema_1.default.findOneAndUpdate({ guild_id: message.guild.id, user_id: message.author.id }, { $inc: { level: 1 }, $set: { currentXP: 0 } }, { upsert: true, new: true });
-        const levelEmbed = new Embed_1.default(client, 'info');
-        levelEmbed.setTitle(`${message.author.username}님의 레벨이 올랐어요!`);
-        levelEmbed.setDescription(`레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`);
-        return message.reply({ embeds: [levelEmbed] });
+        /*const levelEmbed = new Embed(client, 'info')
+        levelEmbed.setTitle(`${message.author.username}님의 레벨이 올랐어요!`)
+        levelEmbed.setDescription(
+          `레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`
+        )*/
+        return message.reply('${message.author.username}님의 레벨이 `LV.${level ? level : 0} -> LV.${newData.level}`로 올랐어요!');
     }
 });
