@@ -54,7 +54,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                     value: nickname
                 });
                 if (!player || player.length === 0)
-                    return collector_interaction.reply('유저 정보를 찾지 못했습니다! \n 대소문자 구별 필수');
+                    return collector_interaction.reply('유저 정보를 찾지 못했습니다! \n 입력하신 유저의 대소문자 구별하였는지 확인해보세요!');
                 const pubgDB = new PubgStatsSchema_1.default();
                 pubgDB.user_id = player[0].id;
                 pubgDB.nickname = nickname;
