@@ -28,10 +28,10 @@ exports.default = new Event_1.Event('guildCreate', (client, guild) => __awaiter(
     if (!supprotguild)
         return;
     const supportAlertChannel = supprotguild.channels.cache.get(config_1.default.guildAddAlert.channelID);
-    const test = supprotguild.channels.cache.get('943747484025520198');
+    //const test = supprotguild.channels.cache.get('943747484025520198') as TextChannel
     if (!supportAlertChannel)
         return;
     const res = yield ((_a = client.shard) === null || _a === void 0 ? void 0 : _a.fetchClientValues('guilds.cache.size'));
-    return test.send(`서버 : ${guild.name}\n서버 아이디 : ${guild.id}`);
+    //return test.send(`서버 : ${guild.name}\n서버 아이디 : ${guild.id}`)
     return supportAlertChannel.send(`새로운 서버에 추가되었습니다. **(현재 서버수 : ${res === null || res === void 0 ? void 0 : res.reduce((acc, guilds) => Number(acc) + Number(guilds), 0)})**`);
 }));
