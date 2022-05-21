@@ -36,6 +36,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 .setStyle('SECONDARY')
         ];
         embedError.setDescription('처음으로 전적을 검색하는 닉네임 같아요! \n 서버를 선택해 주세요! 다음부터는 선택 없이 검색이 가능해요!');
+        embedError.setColor('#2f3136');
         yield interaction.editReply({
             embeds: [embedError],
             components: [new discord_js_1.MessageActionRow().addComponents(buttons)]
@@ -105,6 +106,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 const squadFppStats = pubgUser.stats.rankSquardFpp;
                 if (!squadFppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 1인칭 스쿼드 경쟁전 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -119,6 +121,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 const squadTppStats = pubgUser.stats.rankSquardTpp;
                 if (!squadTppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 3인칭 스쿼드 경쟁전 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -133,6 +136,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 const squadTppStats = pubgUser.stats.SquardTpp;
                 if (!squadTppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 3인칭 스쿼드 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -147,6 +151,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 const squadFppStats = pubgUser.stats.SquardFpp;
                 if (!squadFppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 1인칭 스쿼드 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -229,6 +234,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 });
                 if (!squadTppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 3인칭 스쿼드 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -266,6 +272,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 });
                 if (!squadTppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 3인칭 스쿼드 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -301,6 +308,7 @@ const playerStats = (nickname, mode, interaction) => __awaiter(void 0, void 0, v
                 });
                 if (!squadFppStats) {
                     embed.setDescription(`\`${pubgUser.nickname}\`님의 1인칭 스쿼드 전적을 찾을 수 없습니다`);
+                    embed.setColor('#ED4245');
                     return interaction.editReply({ embeds: [embed] });
                 }
                 return interaction.editReply({
@@ -317,12 +325,13 @@ const rankStatEmbed = (stats, nickname, mode, last_update) => {
     const embed = new discord_js_1.MessageEmbed();
     if (!stats) {
         embed
-            .setDescription(`\`${nickname}\`님의 ${mode} 스쿼드 전적을 찾을 수 없습니다`)
+            .setDescription(`\`${nickname}\`님의 ${mode} 스쿼드 전적을 찾을 수 없습니다`);
+        embed.setColor('#ED4245')
             .setFooter(`마지막 업데이트: ${(0, DateFormatting_1.Day)(last_update).fromNow(false)}`);
         return embed;
     }
     embed
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setAuthor(`${nickname}님의 ${mode} 전적`)
         .setTitle(stats.currentTier
         ? `${stats.currentTier.tier} ${stats.currentTier.subTier}`
@@ -341,7 +350,7 @@ const statEmbed = (stats, nickname, mode, last_update) => {
     const winGamePercent = (stats.wins / stats.roundsPlayed) * 100;
     const top10GamePercent = (stats.top10s / stats.roundsPlayed) * 100;
     const embed = new discord_js_1.MessageEmbed()
-        .setColor('BLUE')
+        .setColor('#2f3136')
         .setAuthor(`${nickname}님의 ${mode} 전적`)
         .addField('KDA', ((stats.kills + stats.assists) / stats.losses).toFixed(2), true)
         .addField('승률', winGamePercent.toFixed(1) + '%', true)
