@@ -96,6 +96,7 @@ exports.default = new Command_1.BaseCommand({
             songs.push(music.title);
         });
         sucessembed.setAuthor('재생목록에 아래 노래들을 추가했어요!', undefined, result.playlist.url);
+        sucessembed.setColor('#2f3136');
         sucessembed.setDescription(songs.join(', '));
         sucessembed.setThumbnail(result.playlist.thumbnail);
         queue.addTracks(result.tracks);
@@ -136,6 +137,7 @@ exports.default = new Command_1.BaseCommand({
                     sucessembed.setAuthor(`재생목록에 노래를 추가했어요!`, undefined, result.tracks[index].url);
                     sucessembed.setDescription(`[${result.tracks[index].title}](${result.tracks[index].url}) ${result.tracks[index].duration} - ${result.tracks[index].requestedBy}`);
                     sucessembed.setThumbnail(result.tracks[index].thumbnail);
+                    sucessembed.setColor('#2f3136');
                     msg.edit({ content: ' ', embeds: [sucessembed], components: [] });
                     if (!queue.playing)
                         return yield queue.play();
@@ -246,6 +248,7 @@ exports.default = new Command_1.BaseCommand({
                         embed.setDescription(`\n${tracks.join('\n')}${result.playlist.tracks.length > pageEnd
                             ? `\n... + ${result.playlist.tracks.length - pageEnd}`
                             : ''}`);
+                        embed.setColor('#2f3136');
                         embed.setThumbnail(result.playlist.thumbnail);
                         embed.setAuthor(`재생목록에 아래 노래들을 추가했어요!`, undefined, `${result.playlist.url}`);
                         pages.push(embed);
@@ -258,6 +261,7 @@ exports.default = new Command_1.BaseCommand({
                             embed.setDescription(`더 이상 재생목록에 노래가 없습니다`);
                             embed.setThumbnail(result.playlist.thumbnail);
                             embed.setAuthor(`재생목록에 아래 노래들을 추가했어요!`, undefined, `${result.playlist.url}`);
+                            embed.setColor('#2f3136');
                             return interaction.editReply({ embeds: [embed] });
                         }
                         if (page === 2) {
@@ -305,6 +309,7 @@ exports.default = new Command_1.BaseCommand({
                             sucessembed.setAuthor(`재생목록에 노래를 추가했어요!`, undefined, result.tracks[index].url);
                             sucessembed.setDescription(`[${result.tracks[index].title}](${result.tracks[index].url}) ${result.tracks[index].duration} - ${result.tracks[index].requestedBy}`);
                             sucessembed.setThumbnail(result.tracks[index].thumbnail);
+                            sucessembed.setColor('#2f3136');
                             interaction.editReply({
                                 content: ' ',
                                 embeds: [sucessembed],
