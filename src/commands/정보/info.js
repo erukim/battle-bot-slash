@@ -19,6 +19,7 @@ const package_json_1 = require("../../../package.json");
 const Command_1 = require("../../structures/Command");
 const DateFormatting_1 = __importDefault(require("../../utils/DateFormatting"));
 const Embed_1 = __importDefault(require("../../utils/Embed"));
+const discord_js_2 = require("discord.js");
 const memory = () => {
     const memory = process.memoryUsage().rss;
     return (memory / 1024 / 1024).toFixed(2) + "MB";
@@ -29,6 +30,12 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['정보', 'info', 'wjdqh']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
+    let buttton = new discord_js_2.MessageButton()
+        .setLabel('하트 누르기')
+        .setURL("https://koreanbots.dev/bots/928523914890608671/vote")
+        .setStyle('LINK');
+    let row = new discord_js_2.MessageActionRow()
+        .addComponents(buttton);
     let embed = new Embed_1.default(client, 'default')
         .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 정보`)
         .setColor('#2f3136');
@@ -40,7 +47,7 @@ exports.default = new Command_1.BaseCommand({
     embed.addField('업타임', `${DateFormatting_1.default.relative(new Date(Date.now() - process.uptime() * 1000))}`, true);
     embed.addField('시스템정보', `\`\`\`diff\n- Discord.js: ${discord_js_1.version} \n- Node.js: ${process.version}\n- OS: ${process.platform} - Memory: ${memory()} \`\`\``);
     embed.addField('유용한 링크', `[서포트 서버](https://discord.gg/WtGq7D7BZm) | [웹 대시보드](${config_1.default.web.baseurl}) | [깃허브](${package_json_1.repository}) | [개인정보처리방침](${config_1.default.web.baseurl}/help/privacy) | [상태](${config_1.default.web.baseurl}/status)`);
-    return message.reply({ embeds: [embed] });
+    return message.reply({ embeds: [embed], components: [row] });
 }), {
     data: new builders_1.SlashCommandBuilder()
         .setName('정보')
@@ -52,6 +59,12 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
+            let buttton = new discord_js_2.MessageButton()
+                .setLabel('하트 누르기')
+                .setURL("https://koreanbots.dev/bots/928523914890608671/vote")
+                .setStyle('LINK');
+            let row = new discord_js_2.MessageActionRow()
+                .addComponents(buttton);
             let embed = new Embed_1.default(client, 'default')
                 .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 정보`)
                 .setColor('#2f3136');
@@ -63,7 +76,7 @@ exports.default = new Command_1.BaseCommand({
             embed.addField('업타임', `${DateFormatting_1.default.relative(new Date(Date.now() - process.uptime() * 1000))}`, true);
             embed.addField('시스템정보', `\`\`\`diff\n- Discord.js: ${discord_js_1.version} \n- Node.js: ${process.version}\n- OS: ${process.platform} - Memory: ${memory()} \`\`\``);
             embed.addField('유용한 링크', `[서포트 서버](https://discord.gg/WtGq7D7BZm) | [웹 대시보드](${config_1.default.web.baseurl}) | [깃허브](${package_json_1.repository}) | [개인정보처리방침](${config_1.default.web.baseurl}/help/privacy) | [상태](${config_1.default.web.baseurl}/status)`);
-            return interaction.reply({ embeds: [embed] });
+            return interaction.reply({ embeds: [embed], components: [row] });
         });
     }
 });
