@@ -23,7 +23,8 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['재생목록', 'musicqueue', '큐']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     let errembed = new Embed_1.default(client, 'error');
-    let sucessembed = new Embed_1.default(client, 'success');
+    let sucessembed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     if (!message.guild) {
         errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
         return message.reply({ embeds: [errembed] });
