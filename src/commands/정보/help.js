@@ -50,7 +50,7 @@ exports.default = new Command_1.BaseCommand({
                     .setTitle('이런...')
                     .setDescription(`존재하지 않는 카테고리입니다.`)
                     .setType('error');
-                return message.reply({ embeds: [embed] });
+                return message.reply({ embeds: [embed], components: [row] });
             }
         }
         if (!commands) {
@@ -58,13 +58,13 @@ exports.default = new Command_1.BaseCommand({
                 .setTitle('이런...')
                 .setDescription(`존재하지 않는 카테고리입니다.`)
                 .setType('error');
-            return message.reply({ embeds: [embed] });
+            return message.reply({ embeds: [embed], components: [row] });
         }
         embed.setDescription(`${args[0]} 관련 도움말 입니다!`);
         commands.forEach((command) => {
             embed.addField(`\`${config_1.default.bot.prefix}${command.name}\``, `> ${command.description}`, true);
         });
-        return message.reply({ embeds: [embed] });
+        return message.reply({ embeds: [embed], components: [row] });
     }
 }), {
     data: new builders_1.SlashCommandBuilder()
@@ -108,7 +108,7 @@ exports.default = new Command_1.BaseCommand({
                             .setTitle('이런...')
                             .setDescription(`존재하지 않는 카테고리입니다.`)
                             .setType('error');
-                        return interaction.reply({ embeds: [embed] });
+                        return interaction.reply({ embeds: [embed], components: [row] });
                     }
                 }
                 let commands = client.categorys.get(category);
@@ -117,7 +117,7 @@ exports.default = new Command_1.BaseCommand({
                         .setTitle('이런...')
                         .setDescription(`존재하지 않는 카테고리입니다.`)
                         .setType('error');
-                    return interaction.reply({ embeds: [embed] });
+                    return interaction.reply({ embeds: [embed], components: [row] });
                 }
                 embed.setDescription(`${category} 관련 도움말 입니다!`);
                 let isSlash = commands === null || commands === void 0 ? void 0 : commands.filter((x) => x.isSlash);
@@ -132,7 +132,7 @@ exports.default = new Command_1.BaseCommand({
                         embed.addField(`\`/${command.name}\``, `> ${command.description}`);
                     });
                 }
-                return interaction.reply({ embeds: [embed] });
+                return interaction.reply({ embeds: [embed], components: [row] });
             }
         });
     }
