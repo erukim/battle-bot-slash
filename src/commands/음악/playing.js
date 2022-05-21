@@ -36,6 +36,7 @@ exports.default = new Command_1.BaseCommand({
     sucessembed.setAuthor('재생 중인 노래', 'https://cdn.discordapp.com/emojis/667750713698549781.gif?v=1', queue.nowPlaying().url);
     sucessembed.setDescription(`[**${queue.nowPlaying().title} - ${queue.nowPlaying().author}**](${queue.nowPlaying().url}) ${queue.nowPlaying().duration} - ${queue.nowPlaying().requestedBy}`);
     sucessembed.setThumbnail(queue.nowPlaying().thumbnail);
+    sucessembed.setColor('#2f3136');
     return message.reply({ embeds: [sucessembed] });
 }), {
     data: new builders_1.SlashCommandBuilder()
@@ -62,6 +63,7 @@ exports.default = new Command_1.BaseCommand({
             sucessembed.setAuthor('재생 중인 노래', 'https://cdn.discordapp.com/emojis/667750713698549781.gif?v=1', queue.nowPlaying().url);
             sucessembed.setDescription(`[**${queue.nowPlaying().title} - ${queue.nowPlaying().author}**](${queue.nowPlaying().url}) ${queue.nowPlaying().duration} - ${queue.nowPlaying().requestedBy}`);
             sucessembed.setThumbnail(queue.nowPlaying().thumbnail);
+            sucessembed.setColor('#2f3136');
             return (0, musicbutton_1.default)(interaction, sucessembed);
         });
     }
