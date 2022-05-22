@@ -25,7 +25,8 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     let errembed = new Embed_1.default(client, 'error');
-    let sucessembed = new Embed_1.default(client, 'success');
+    let sucessembed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     if (!message.guild) {
         errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
         return message.reply({ embeds: [errembed] });
@@ -96,7 +97,6 @@ exports.default = new Command_1.BaseCommand({
             songs.push(music.title);
         });
         sucessembed.setAuthor('재생목록에 아래 노래들을 추가했어요!', undefined, result.playlist.url);
-        sucessembed.setColor('#2f3136');
         sucessembed.setDescription(songs.join(', '));
         sucessembed.setThumbnail(result.playlist.thumbnail);
         queue.addTracks(result.tracks);
@@ -137,7 +137,6 @@ exports.default = new Command_1.BaseCommand({
                     sucessembed.setAuthor(`재생목록에 노래를 추가했어요!`, undefined, result.tracks[index].url);
                     sucessembed.setDescription(`[${result.tracks[index].title}](${result.tracks[index].url}) ${result.tracks[index].duration} - ${result.tracks[index].requestedBy}`);
                     sucessembed.setThumbnail(result.tracks[index].thumbnail);
-                    sucessembed.setColor('#2f3136');
                     msg.edit({ content: ' ', embeds: [sucessembed], components: [] });
                     if (!queue.playing)
                         return yield queue.play();
@@ -162,7 +161,8 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply();
             let errembed = new Embed_1.default(client, 'error');
-            let sucessembed = new Embed_1.default(client, 'success');
+            let sucessembed = new Embed_1.default(client, 'success')
+                .setColor('#2f3136');
             if (!interaction.guild) {
                 errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
                 return interaction.editReply({ embeds: [errembed] });
@@ -245,10 +245,10 @@ exports.default = new Command_1.BaseCommand({
                     });
                     if (tracks.length) {
                         const embed = new Embed_1.default(client, 'success');
+                        embed.setColor('#2f3136');
                         embed.setDescription(`\n${tracks.join('\n')}${result.playlist.tracks.length > pageEnd
                             ? `\n... + ${result.playlist.tracks.length - pageEnd}`
                             : ''}`);
-                        embed.setColor('#2f3136');
                         embed.setThumbnail(result.playlist.thumbnail);
                         embed.setAuthor(`재생목록에 아래 노래들을 추가했어요!`, undefined, `${result.playlist.url}`);
                         pages.push(embed);
@@ -258,10 +258,10 @@ exports.default = new Command_1.BaseCommand({
                         emptypage = 1;
                         if (page === 1) {
                             const embed = new Embed_1.default(client, 'success');
+                            embed.setColor('#2f3136');
                             embed.setDescription(`더 이상 재생목록에 노래가 없습니다`);
                             embed.setThumbnail(result.playlist.thumbnail);
                             embed.setAuthor(`재생목록에 아래 노래들을 추가했어요!`, undefined, `${result.playlist.url}`);
-                            embed.setColor('#2f3136');
                             return interaction.editReply({ embeds: [embed] });
                         }
                         if (page === 2) {
@@ -309,7 +309,6 @@ exports.default = new Command_1.BaseCommand({
                             sucessembed.setAuthor(`재생목록에 노래를 추가했어요!`, undefined, result.tracks[index].url);
                             sucessembed.setDescription(`[${result.tracks[index].title}](${result.tracks[index].url}) ${result.tracks[index].duration} - ${result.tracks[index].requestedBy}`);
                             sucessembed.setThumbnail(result.tracks[index].thumbnail);
-                            sucessembed.setColor('#2f3136');
                             interaction.editReply({
                                 content: ' ',
                                 embeds: [sucessembed],
