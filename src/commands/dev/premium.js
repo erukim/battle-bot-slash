@@ -27,6 +27,7 @@ exports.default = new Command_1.MessageCommand({
     if (!client.dokdo.owners.includes(message.author.id))
         return message.reply(`해당 명령어는 ${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username}의 주인이 사용할 수 있는 명령어입니다.`);
     let LoadingEmbed = new Embed_1.default(client, 'warn')
+        .setColor('#2f3136')
         .setTitle('잠시만 기다려주십시요')
         .setDescription('해당 서버의 정보를 찾는 중이에요...');
     let msg = yield message.reply({ embeds: [LoadingEmbed] });
@@ -51,6 +52,7 @@ exports.default = new Command_1.MessageCommand({
             }
         }));
         let successEmbed = new Embed_1.default(client, 'success')
+            .setColor('#2f3136')
             .setTitle('프리미엄')
             .setDescription(`관리자 ${message.author.username}에 의하여 ${guild.name}서버의 프리미엄 만료일이 ${date.getFullYear() +
             '년 ' +
@@ -76,6 +78,7 @@ exports.default = new Command_1.MessageCommand({
     else {
         yield premiumSchemas_1.default.updateOne({ guild_id: guild.id }, { $set: { nextpay_date: date } });
         let successEmbed = new Embed_1.default(client, 'success')
+            .setColor('#2f3136')
             .setTitle('프리미엄')
             .setDescription(`관리자 ${message.author.username}에 의하여 ${guild.name}서버의 프리미엄 만료일이 ${date.getFullYear() +
             '년 ' +
