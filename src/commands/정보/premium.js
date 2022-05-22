@@ -24,6 +24,7 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     let embed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136')
         .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 프리미엄`);
     if (!message.guild) {
         embed.setDescription(`프리미엄 확인 기능은 DM 채널에서는 사용이 불가능합니다`);
@@ -59,6 +60,7 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply();
             let embed = new Embed_1.default(client, 'success')
+                .setColor('#2f3136')
                 .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 프리미엄`);
             if (!interaction.guild) {
                 embed.setDescription(`프리미엄 확인 기능은 DM 채널에서는 사용이 불가능합니다`);
