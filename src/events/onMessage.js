@@ -163,7 +163,8 @@ const MusicPlayer = (client, message) => __awaiter(void 0, void 0, void 0, funct
     }
     yield message.delete();
     const errembed = new Embed_1.default(client, 'error');
-    const sucessembed = new Embed_1.default(client, 'success');
+    const sucessembed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     const user = (_f = message.guild) === null || _f === void 0 ? void 0 : _f.members.cache.get(message.author.id);
     const channel = user === null || user === void 0 ? void 0 : user.voice.channel;
     if (!channel) {
