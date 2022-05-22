@@ -21,8 +21,7 @@ exports.default = new Command_1.BaseCommand({
     description: '현재 재생중인 노래를 확인합니다',
     aliases: ['현재재생중', 'musicnow']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
-    let errembed = new Embed_1.default(client, 'error')
-        .setTitle('어라...');
+    let errembed = new Embed_1.default(client, 'error');
     let sucessembed = new Embed_1.default(client, 'success')
         .setColor('#2f3136');
     if (!message.guild) {
@@ -50,8 +49,7 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply();
-            let errembed = new Embed_1.default(client, 'error')
-                .setTitle('어라...');
+            let errembed = new Embed_1.default(client, 'error');
             let sucessembed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             if (!interaction.guild) {
