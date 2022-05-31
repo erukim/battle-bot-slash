@@ -33,7 +33,8 @@ exports.default = new Command_1.BaseCommand({
     else {
         let embed = new Embed_1.default(client, 'info')
             .setTitle(`급식`)
-            .setDescription(`잠시만 기다려주세요. 학교를 찾는중이에요...`);
+            .setDescription(`잠시만 기다려주세요. 학교를 찾는중이에요...`)
+            .setColor('#2f3136');
         let msg = yield message.reply({ embeds: [embed] });
         yield axios_1.default.get(`https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=${encodeURI(args[0])}`)
             .then((d) => __awaiter(void 0, void 0, void 0, function* () {
@@ -124,7 +125,8 @@ exports.default = new Command_1.BaseCommand({
             else {
                 let embed = new Embed_1.default(client, 'info')
                     .setTitle(`급식`)
-                    .setDescription(`잠시만 기다려주세요. 학교를 찾는중이에요...`);
+                    .setDescription(`잠시만 기다려주세요. 학교를 찾는중이에요...`)
+                    .setColor('#2f3136');
                 let msg = yield interaction.reply({ embeds: [embed] });
                 yield axios_1.default.get(`https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=${encodeURI(school)}`)
                     .then((d) => __awaiter(this, void 0, void 0, function* () {
