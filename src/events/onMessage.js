@@ -48,7 +48,7 @@ exports.default = new Event_1.Event('messageCreate', (client, message) => __awai
     }
     catch (error) {
         if ((error === null || error === void 0 ? void 0 : error.code) === discord_js_1.Constants.APIErrors.MISSING_PERMISSIONS) {
-            return message.reply('해당 명령어를 실행하기 위한 권한이 부족합니다!');
+            return;
         }
         errorManager.report(error, { executer: message, isSend: true });
     }
