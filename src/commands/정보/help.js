@@ -25,10 +25,9 @@ exports.default = new Command_1.BaseCommand({
     var _a;
     let buttton = new discord_js_1.MessageButton()
         .setLabel('하트 누르기')
-        .setURL("https://koreanbots.dev/bots/928523914890608671/vote")
+        .setURL('https://koreanbots.dev/bots/928523914890608671/vote')
         .setStyle('LINK');
-    let row = new discord_js_1.MessageActionRow()
-        .addComponents(buttton);
+    let row = new discord_js_1.MessageActionRow().addComponents(buttton);
     let embed = new Embed_1.default(client, 'success')
         .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 도움말`)
         .setColor('#2f3136');
@@ -83,10 +82,9 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             let buttton = new discord_js_1.MessageButton()
                 .setLabel('하트 누르기')
-                .setURL("https://koreanbots.dev/bots/928523914890608671/vote")
+                .setURL('https://koreanbots.dev/bots/928523914890608671/vote')
                 .setStyle('LINK');
-            let row = new discord_js_1.MessageActionRow()
-                .addComponents(buttton);
+            let row = new discord_js_1.MessageActionRow().addComponents(buttton);
             let embed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136')
                 .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 도움말`);

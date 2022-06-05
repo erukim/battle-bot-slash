@@ -76,23 +76,13 @@ exports.default = new Command_1.BaseCommand({
                     errEmbed.setDescription('학교정보를 찾지 못했습니다.');
                     return interaction.editReply({ embeds: [errEmbed] });
                 }
-                let login = yield (0, hcs_js_1.login)(schoolResult[0].endpoint, schoolResult[0].schoolCode, name, birthday.toString(), schoolResult[0].searchKey);
+                let login = yield (0, hcs_js_1.login)(schoolResult[0].endpoint, schoolResult[0].schoolCode, name, birthday.toString(), schoolResult[0].searchKey, password);
                 if (!login.success) {
                     errEmbed.setDescription('이름과 생년월일이 올바르게 작성되었는지 확인해주세요.');
                     return interaction.editReply({ embeds: [errEmbed] });
                 }
                 if (login.agreementRequired) {
                     yield (0, hcs_js_1.updateAgreement)(schoolResult[0].endpoint, login.token);
-                }
-                let token = login.token;
-                let secondLogin = yield (0, hcs_js_1.secondLogin)(schoolResult[0].endpoint, login.token, password);
-                if (!secondLogin.success) {
-                    if (secondLogin.remainingMinutes) {
-                        errEmbed.setDescription(`비밀번호를 5회 이상 실패하여 ${secondLogin.remainingMinutes}분 후에 재시도가 가능합니다.`);
-                        return interaction.editReply({ embeds: [errEmbed] });
-                    }
-                    errEmbed.setDescription('비밀번호가 올바르지 않습니다. 다시 시도해주세요.');
-                    return interaction.editReply({ embeds: [errEmbed] });
                 }
                 infoEmbed.setAuthor('자가진단 등록');
                 infoEmbed.addField('이름', name, true);
@@ -161,19 +151,21 @@ exports.default = new Command_1.BaseCommand({
                 }
                 else {
                     const school = yield (0, hcs_js_1.searchSchool)(hcsdb.school);
-                    const login = yield (0, hcs_js_1.login)(school[0].endpoint, school[0].schoolCode, hcsdb.name, hcsdb.birthday, school[0].searchKey);
-                    const secondLogin = yield (0, hcs_js_1.secondLogin)(school[0].endpoint, 
-                    // @ts-ignore
-                    login.token, hcsdb.password);
-                    if (!secondLogin.success) {
-                        if (secondLogin.remainingMinutes) {
-                            errEmbed.setDescription(`비밀번호를 5회 이상 실패하여 ${secondLogin.remainingMinutes}분 후에 재시도가 가능합니다.`);
+                    const login = yield (0, hcs_js_1.login)(school[0].endpoint, school[0].schoolCode, hcsdb.name, hcsdb.birthday, school[0].searchKey, hcsdb.password);
+                    if (!login.success) {
+                        if (login.remainingMinutes) {
+                            errEmbed.setDescription(`비밀번호를 5회 이상 실패하여 ${login.remainingMinutes}분 후에 재시도가 가능합니다.`);
                             return interaction.editReply({ embeds: [errEmbed] });
                         }
-                        errEmbed.setDescription('비밀번호가 올바르지 않습니다. 관리자에게 문의해주세요.');
-                        return interaction.editReply({ embeds: [errEmbed] });
+                        if (login.message) {
+                            errEmbed.setDescription(login.message);
+                        }
+                        else {
+                            errEmbed.setDescription(`자가진단 실행중 오류가 발생했습니다.`);
+                        }
+                        return yield interaction.editReply({ embeds: [errEmbed] });
                     }
-                    yield (0, hcs_js_1.registerSurvey)(school[0].endpoint, secondLogin.token);
+                    yield (0, hcs_js_1.registerSurvey)(school[0].endpoint, login.token);
                     successEmbed.setDescription(`\`${hcsdb.name}\`님의 자가진단이 완료되었습니다`);
                     successEmbed.setColor('#2f3136');
                     return yield interaction.editReply({ embeds: [successEmbed] });
