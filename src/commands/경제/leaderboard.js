@@ -18,9 +18,10 @@ const comma_number_1 = __importDefault(require("comma-number"));
 const Money_1 = __importDefault(require("../../schemas/Money"));
 exports.default = new Command_1.BaseCommand({
     name: 'leaderboard',
-    description: '자신의 돈을 확인합니다.',
+    description: '자신의 돈을 확인합니다. (서버, 전체)',
     aliases: ['순위', 'moneylist', 'tnsdnl', '랭킹', '돈순위']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
+    const type = args[0];
     let embed = new Embed_1.default(client, 'warn').setTitle('처리중..');
     let m = yield message.reply({
         embeds: [embed]
@@ -29,14 +30,24 @@ exports.default = new Command_1.BaseCommand({
         .sort({ money: 1, descending: 1 })
         .limit(10)
         .exec((error, res) => {
-        var _a;
-        const embed = new Embed_1.default(client, 'info').setTitle('돈 순위표');
-        for (let i = 0; i < res.length; i++) {
-            let searchuser = client.users.cache.get(res[i].userid);
-            const user = searchuser;
-            const users = (_a = user === null || user === void 0 ? void 0 : user.username) !== null && _a !== void 0 ? _a : '찾을수가 없어요!';
-            embed.addField(`${i + 1}. ${users}`, `${(0, comma_number_1.default)(res[i].money)}원`);
-            embed.setColor('#2f3136');
+        var _a, _b;
+        const data = res.reverse();
+        const embed = new Embed_1.default(client, 'info').setColor('#2f3136');
+        for (let i = 0; i < data.length; i++) {
+            if (type === '전체' || !type) {
+                embed.setTitle('돈 순위표');
+                let searchuser = client.users.cache.get(data[i].userid);
+                if (!searchuser)
+                    return;
+                embed.addField(`${i + 1}. ${searchuser.username}`, `${(0, comma_number_1.default)(data[i].money)}원`);
+            }
+            else if (type === '서버') {
+                embed.setTitle('서버 돈 순위표');
+                let searchuser = (_a = message.guild) === null || _a === void 0 ? void 0 : _a.members.cache.get(data[i].userid);
+                if (!searchuser)
+                    return;
+                embed.addField(`${i + 1}. ${(_b = searchuser.nickname) !== null && _b !== void 0 ? _b : searchuser.user.username}`, `${(0, comma_number_1.default)(data[i].money)}원`);
+            }
         }
         m.edit({
             embeds: [embed]
