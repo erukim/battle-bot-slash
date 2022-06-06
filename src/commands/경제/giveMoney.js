@@ -21,7 +21,8 @@ exports.default = new Command_1.BaseCommand({
     description: '자신의 돈을 확인합니다.',
     aliases: ['돈받기', 'moneyget', 'ehswnj', '돈줘']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
-    let embed = new Embed_1.default(client, 'warn').setTitle('처리중..');
+    let embed = new Embed_1.default(client, 'warn').setTitle('처리중..')
+        .setColor('#2f3136');
     let m = yield message.reply({
         embeds: [embed]
     });
@@ -38,14 +39,16 @@ exports.default = new Command_1.BaseCommand({
         });
         newData.save();
         embed = new Embed_1.default(client, 'success').setTitle('환영합니다!')
-            .setDescription(`처음이시군요! 5000원을 입금해드리겠습니다!`);
+            .setDescription(`처음이시군요! 5000원을 입금해드리겠습니다!`)
+            .setColor('#2f3136');
         m.edit({
             embeds: [embed]
         });
     }
     else {
         embed = new Embed_1.default(client, 'info')
-            .setDescription(`이미 오늘 돈을 받으셨어요 ㅠㅠ\n다음에 다시 와주세요!`);
+            .setDescription(`이미 오늘 돈을 받으셨어요 ㅠㅠ\n다음에 다시 와주세요!`)
+            .setColor('#2f3136');
         if (ehqkrduqn.date == date)
             return m.edit({
                 embeds: [embed]
@@ -59,7 +62,8 @@ exports.default = new Command_1.BaseCommand({
         const f = money + 5000;
         embed = new Embed_1.default(client, 'success').setTitle('입금이 완료되었습니다!')
             .setDescription(`처음이시군요! 5000원을 입금해드리겠습니다!`)
-            .addField(`돈이 입금되었습니다!`, `현재 잔액 : ${(0, comma_number_1.default)(f)}`);
+            .addField(`돈이 입금되었습니다!`, `현재 잔액 : ${(0, comma_number_1.default)(f)}`)
+            .setColor('#2f3136');
         m.edit({
             embeds: [embed]
         });

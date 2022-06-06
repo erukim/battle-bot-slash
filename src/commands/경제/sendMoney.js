@@ -35,14 +35,14 @@ exports.default = new Command_1.BaseCommand({
     const tkdeoqkd = yield Money_1.default.findOne({ userid: user.id });
     embed = new Embed_1.default(client, 'error')
         .setDescription(message.author +
-        '님의 정보가 확인되지 않습니다.\n먼저 `!돈줘`를 입력해 정보를 알려주세요!')
+        '님의 정보가 확인되지 않습니다.\n먼저 `!돈받기`를 입력해 정보를 알려주세요!')
         .setTimestamp();
     if (!sk)
         return m.edit({
             embeds: [embed]
         });
     embed = new Embed_1.default(client, 'error')
-        .setDescription('상대방의 정보가 확인되지 않았어요ㅠㅠ\n상대방에게 먼저 `!돈줘`를 입력해 정보를 알려달라고 해주세요!')
+        .setDescription('상대방의 정보가 확인되지 않았어요ㅠㅠ\n상대방에게 먼저 `!돈받기`를 입력해 정보를 알려달라고 해주세요!')
         .setTimestamp();
     if (!tkdeoqkd)
         return m.edit({
@@ -100,7 +100,8 @@ exports.default = new Command_1.BaseCommand({
         .setTitle('돈을 보냈어요!')
         .addField(`송금인 잔액`, `${(0, comma_number_1.default)(money - betting)}원`, true)
         .addField(`받는사람 잔액`, ` ${money2 + betting}원`, true)
-        .setTimestamp();
+        .setTimestamp()
+        .setColor('#2f3136');
     m.edit({
         embeds: [embed]
     });
