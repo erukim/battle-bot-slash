@@ -23,13 +23,10 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     const type = args[0];
-    let Loadembed = new Embed_1.default(client, 'warn').setTitle('처리중..');
-    let m = yield message.reply({
-        embeds: [Loadembed]
-    });
     const data = yield Money_1.default.find()
         .sort({ money: -1, descending: -1 })
         .limit(10);
+    console.log(data);
     const embed = new Embed_1.default(client, 'info').setColor('#2f3136');
     for (let i = 0; i < data.length; i++) {
         if (type === '전체') {
@@ -54,7 +51,7 @@ exports.default = new Command_1.BaseCommand({
             embed.addField(`${i + 1}. ${searchuser.username}`, `${(0, comma_number_1.default)(data[i].money)}원`);
         }
     }
-    m.edit({
+    message.reply({
         embeds: [embed]
     });
 }));
