@@ -26,7 +26,9 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['주식', 'stock', '주식거래', '주식거래하기']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     const type = args[0];
-    const embed = new Embed_1.default(client, 'info').setTitle('주식');
+    const embed = new Embed_1.default(client, 'info')
+        .setTitle('주식')
+        .setColor('#2f3136');
     if (type === '검색') {
         const keyword = args.slice(1).join(' ');
         const results = yield (0, stock_1.searchStockList)(keyword);
