@@ -53,7 +53,7 @@ exports.default = new Command_1.BaseCommand({
         return m.edit({
             embeds: [embed]
         });
-    embed = new Embed_1.default(client, 'error').setDescription('보유하고 있는 돈보다 많은 금액은 보낼수가 없어요.')
+    embed = new Embed_1.default(client, 'error').setDescription('보유하고 있는 돈보다 많은 돈을 배팅하실 수 없어요.')
         .setTimestamp();
     if (money > ehqkrduqn.money)
         return m.edit({
@@ -62,8 +62,8 @@ exports.default = new Command_1.BaseCommand({
     const random = Math.floor(Math.random() * 101);
     if (random < 50) {
         embed = new Embed_1.default(client, 'success').setTitle(`아쉽네요..`)
-            .setDescription(`저한테 패배 하셨군요... 이 돈은 그럼 제가 쓸어담아보겠습니다!`)
-            .addField("잔액 :", `**${(0, comma_number_1.default)(money)}원**`)
+            .setDescription(`저한테 패배 하셨군요... 이 돈은 그럼 제가 쓸어담아보겠습니다! - **${(0, comma_number_1.default)(money)}원`)
+            .addField("잔액 :", `**${(0, comma_number_1.default)(ehqkrduqn.money - money)}원**`)
             .setColor('#2f3136');
         m.edit({
             embeds: [embed]
@@ -76,8 +76,8 @@ exports.default = new Command_1.BaseCommand({
     }
     else {
         embed = new Embed_1.default(client, 'success').setTitle(`승리!`)
-            .setDescription(`도박에서 저를 이기셨군요!`)
-            .addField("잔액 :", `**${(0, comma_number_1.default)(money)}원**`)
+            .setDescription(`도박에서 저를 이기셨군요! + **${(0, comma_number_1.default)(money)}원**`)
+            .addField("잔액 :", `**${(0, comma_number_1.default)(ehqkrduqn.money + money)}원**`)
             .setColor('#2f3136');
         m.edit({
             embeds: [embed]
