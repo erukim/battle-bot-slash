@@ -27,7 +27,8 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     let embed = new Embed_1.default(client, 'warn')
         .setTitle('하트인증')
-        .setDescription('하트인증 진행할 플랫폼을 선택해주세요!');
+        .setDescription('하트인증 진행할 플랫폼을 선택해주세요!')
+        .setColor('#2f3136');
     const money = yield Money_1.default.findOne({ userid: message.author.id });
     if (!money) {
         embed.setDescription(message.author +
@@ -67,7 +68,8 @@ exports.default = new Command_1.BaseCommand({
                     embed = new Embed_1.default(client, 'warn')
                         .setTitle('한국 디스코드 리스트 봇 하트인증')
                         .setDescription(`한국 디스코드 리스트에 있는 배틀이 봇의 하트가 아직 눌려있지 않았어요!`)
-                        .setTimestamp();
+                        .setTimestamp()
+                        .setColor('#2f3136');
                     let link = new discord_js_1.default.MessageActionRow().addComponents(new discord_js_1.default.MessageButton()
                         .setURL(`https://koreanbots.dev/bots/${(_c = client.user) === null || _c === void 0 ? void 0 : _c.id}/vote`)
                         .setLabel(`하트 누르기`)
@@ -92,7 +94,8 @@ exports.default = new Command_1.BaseCommand({
                         embed = new Embed_1.default(client, 'success')
                             .setTitle('한국 디스코드 리스트 봇 하트인증')
                             .setDescription(`${message.author.username}님의 한국 디스코드 리스트에 있는 배틀이 봇의 하트인증이 완료되었습니다.`)
-                            .setTimestamp();
+                            .setTimestamp()
+                            .setColor('#2f3136');
                         i.reply({
                             embeds: [embed]
                         });
@@ -102,7 +105,8 @@ exports.default = new Command_1.BaseCommand({
                         embed = new Embed_1.default(client, 'success')
                             .setTitle('한국 디스코드 리스트 봇 하트인증')
                             .setDescription(`${DateFormatting_1.default._format(res.data.data.lastVote + 12 * 60 * 60 * 1000, 'R')} 뒤에 다시 인증해주세요!`)
-                            .setTimestamp();
+                            .setTimestamp()
+                            .setColor('#2f3136');
                         i.reply({
                             embeds: [embed]
                         });
@@ -136,7 +140,8 @@ exports.default = new Command_1.BaseCommand({
                     embed = new Embed_1.default(client, 'warn')
                         .setTitle('아카이브 봇 하트인증')
                         .setDescription(`아카이브에 있는 배틀이 봇의 하트가 아직 눌려있지 않았어요!`)
-                        .setTimestamp();
+                        .setTimestamp()
+                        .setColor('#2f3136');
                     let link = new discord_js_1.default.MessageActionRow().addComponents(new discord_js_1.default.MessageButton()
                         .setURL(`https://archiver.me/bots/${(_d = client.user) === null || _d === void 0 ? void 0 : _d.id}/like`)
                         .setLabel(`하트 누르기`)
@@ -161,7 +166,8 @@ exports.default = new Command_1.BaseCommand({
                         embed = new Embed_1.default(client, 'success')
                             .setTitle('아카이브 봇 하트인증')
                             .setDescription(`${message.author.username}님의 아카이브에 있는 배틀이 봇의 하트인증이 완료되었습니다.`)
-                            .setTimestamp();
+                            .setTimestamp()
+                            .setColor('#2f3136');
                         i.reply({
                             embeds: [embed]
                         });
@@ -171,7 +177,8 @@ exports.default = new Command_1.BaseCommand({
                         embed = new Embed_1.default(client, 'success')
                             .setTitle('아카이브 봇 하트인증')
                             .setDescription(`${DateFormatting_1.default._format(res.data.data.lastLike + 24 * 60 * 60 * 1000, 'R')} 뒤에 다시 인증해주세요!`)
-                            .setTimestamp();
+                            .setTimestamp()
+                            .setColor('#2f3136');
                         i.reply({
                             embeds: [embed]
                         });
