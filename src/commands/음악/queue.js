@@ -23,7 +23,8 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['재생목록', 'musicqueue', '큐']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     let errembed = new Embed_1.default(client, 'error');
-    let sucessembed = new Embed_1.default(client, 'success');
+    let sucessembed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     if (!message.guild) {
         errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
         return message.reply({ embeds: [errembed] });
@@ -61,6 +62,8 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply();
             let errembed = new Embed_1.default(client, 'error');
+            let sucessembed = new Embed_1.default(client, 'success')
+                .setColor('#2f3136');
             if (!interaction.guild) {
                 errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
                 return interaction.editReply({ embeds: [errembed] });
@@ -90,21 +93,20 @@ exports.default = new Command_1.BaseCommand({
                     return `**${i + pageStart + 1}**. [${m.title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
                 });
                 if (tracks.length) {
-                    const embed = new Embed_1.default(client, 'success');
-                    embed.setDescription(`\n${tracks.join('\n')}${queue.tracks.length > pageEnd
+                    sucessembed.setColor('#2f3136');
+                    sucessembed.setDescription(`\n${tracks.join('\n')}${queue.tracks.length > pageEnd
                         ? `\n... + ${queue.tracks.length - pageEnd}`
                         : ''}`);
-                    embed.setAuthor(`재생 중인 노래 🎵 ${queue.current.title} - ${queue.current.author}`, undefined, `${queue.current.url}`);
-                    pages.push(embed);
+                    sucessembed.setAuthor(`재생 중인 노래 🎵 ${queue.current.title} - ${queue.current.author}`, undefined, `${queue.current.url}`);
+                    pages.push(sucessembed);
                     page++;
                 }
                 else {
                     emptypage = 1;
                     if (page === 1) {
-                        const embed = new Embed_1.default(client, 'success');
-                        embed.setDescription(`더 이상 재생목록에 노래가 없습니다`);
-                        embed.setAuthor(`재생 중인 노래 🎵 ${queue.current.title} - ${queue.current.author}`, undefined, `${queue.current.url}`);
-                        return interaction.editReply({ embeds: [embed] });
+                        sucessembed.setDescription(`더 이상 재생목록에 노래가 없습니다`);
+                        sucessembed.setAuthor(`재생 중인 노래 🎵 ${queue.current.title} - ${queue.current.author}`, undefined, `${queue.current.url}`);
+                        return interaction.editReply({ embeds: [sucessembed] });
                     }
                     if (page === 2) {
                         return interaction.editReply({ embeds: [pages[0]] });

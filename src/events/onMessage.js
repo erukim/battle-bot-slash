@@ -21,7 +21,9 @@ const musicSchema_1 = __importDefault(require("../schemas/musicSchema"));
 const Embed_1 = __importDefault(require("../utils/Embed"));
 const levelSchema_1 = __importDefault(require("../schemas/levelSchema"));
 const levelSettingSchema_1 = __importDefault(require("../schemas/levelSettingSchema"));
+const korcen_1 = require("korcen");
 const checkPremium_1 = require("../utils/checkPremium");
+const WarnHandler_1 = require("../utils/WarnHandler");
 const LevelCooldown = new Map();
 exports.default = new Event_1.Event('messageCreate', (client, message) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
@@ -48,7 +50,7 @@ exports.default = new Event_1.Event('messageCreate', (client, message) => __awai
     }
     catch (error) {
         if ((error === null || error === void 0 ? void 0 : error.code) === discord_js_1.Constants.APIErrors.MISSING_PERMISSIONS) {
-            return message.reply('해당 명령어를 실행하기 위한 권한이 부족합니다!');
+            return;
         }
         errorManager.report(error, { executer: message, isSend: true });
     }
@@ -66,51 +68,27 @@ const profanityFilter = (client, message) => __awaiter(void 0, void 0, void 0, f
         return;
     if ((_c = automodDB.useing.useCurseIgnoreChannel) === null || _c === void 0 ? void 0 : _c.includes(message.channel.id))
         return;
-    let regex = false;
-    if (/(쌍)(년|놈)/.test(message.content))
-        regex = true;
-    if (!regex &&
-        /((씨|쓰|ㅅ|ㅆ|si)([0-9]+|\W+)(블|벌|발|빨|뻘|ㅂ|ㅃ|bal))/.test(message.content))
-        regex = true;
-    if (!regex &&
-        /((시발)(?!역)|((시|씨|쓰|ㅅ|ㅆ)([0-9]+|\W+|)(블|벌|발|빨|뻘|ㅂ|ㅃ))(!시발))/.test(message.content))
-        regex = true;
-    if (!regex &&
-        /((병|빙|븅|등|ㅂ)([0-9]+|\W+|)(신|싄|ㅅ)|ㅄ)/.test(message.content))
-        regex = true;
-    if (!regex &&
-        /((너|느(그|)|니)([0-9]+|\W+|)(금|애미|엄마|금마|검마))/.test(message.content))
-        regex = true;
-    if (!regex && /(개|게)(같|갓|새|세|쉐)/.test(message.content))
-        regex = true;
-    if (!regex && /(꼬|꽂|고)(추|츄)/.test(message.content))
-        regex = true;
-    if (!regex && /(니|너)(어|엄|엠|애|m|M)/.test(message.content))
-        regex = true;
-    if (!regex && /(노)(애|앰)/.test(message.content))
-        regex = true;
-    if (!regex && /((뭔|)개(소리|솔))/.test(message.content))
-        regex = true;
-    if (!regex && /(ㅅㅂ|ㅄ|ㄷㅊ)/.test(message.content))
-        regex = true;
-    if (!regex && /(놈|년|새끼)/.test(message.content))
-        regex = true;
-    if (regex) {
-        findCurse(automodDB, message);
+    if ((0, korcen_1.check)(message.content)) {
+        findCurse(automodDB, message, client);
     }
     else {
         return;
     }
 });
-const findCurse = (automodDB, message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _d, _e;
+const findCurse = (automodDB, message, client) => __awaiter(void 0, void 0, void 0, function* () {
+    var _d, _e, _f, _g;
     if (automodDB.useing.useCurseType === 'delete') {
         yield message.reply('욕설 사용으로 자동 삭제됩니다').then((m) => {
             setTimeout(() => {
                 m.delete();
             }, 5000);
         });
-        return yield message.delete();
+        try {
+            message.delete();
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
     else if (automodDB.useing.useCurseType === 'delete_kick') {
         yield message.reply('욕설 사용으로 자동 삭제 후 추방됩니다').then((m) => {
@@ -118,8 +96,8 @@ const findCurse = (automodDB, message) => __awaiter(void 0, void 0, void 0, func
                 m.delete();
             }, 5000);
         });
-        yield message.delete();
         try {
+            message.delete();
             return (_d = message.member) === null || _d === void 0 ? void 0 : _d.kick();
         }
         catch (e) {
@@ -132,20 +110,33 @@ const findCurse = (automodDB, message) => __awaiter(void 0, void 0, void 0, func
                 m.delete();
             }, 5000);
         });
-        yield message.delete();
         try {
+            message.delete();
             return (_e = message.member) === null || _e === void 0 ? void 0 : _e.ban({ reason: '[배틀이] 욕설 사용 자동차단' });
         }
         catch (e) {
             return;
         }
     }
-    else {
-        return;
+    else if (automodDB.useing.useCurseType === 'delete_warn') {
+        yield message
+            .reply('욕설 사용으로 자동 삭제 후 경고가 지급됩니다')
+            .then((m) => {
+            setTimeout(() => {
+                m.delete();
+            }, 5000);
+        });
+        try {
+            message.delete();
+            return (0, WarnHandler_1.userWarnAdd)(client, message.author.id, (_f = message.guild) === null || _f === void 0 ? void 0 : _f.id, '[배틀이] 욕설 사용 자동경고', (_g = client.user) === null || _g === void 0 ? void 0 : _g.id);
+        }
+        catch (e) {
+            return;
+        }
     }
 });
 const MusicPlayer = (client, message) => __awaiter(void 0, void 0, void 0, function* () {
-    var _f, _g;
+    var _h, _j;
     if (!message.guild)
         return;
     if (!message.content)
@@ -163,8 +154,8 @@ const MusicPlayer = (client, message) => __awaiter(void 0, void 0, void 0, funct
     }
     yield message.delete();
     const errembed = new Embed_1.default(client, 'error');
-    const sucessembed = new Embed_1.default(client, 'success');
-    const user = (_f = message.guild) === null || _f === void 0 ? void 0 : _f.members.cache.get(message.author.id);
+    const sucessembed = new Embed_1.default(client, 'success').setColor('#2f3136');
+    const user = (_h = message.guild) === null || _h === void 0 ? void 0 : _h.members.cache.get(message.author.id);
     const channel = user === null || user === void 0 ? void 0 : user.voice.channel;
     if (!channel) {
         errembed.setTitle('❌ 음성 채널에 먼저 입장해주세요!');
@@ -176,7 +167,7 @@ const MusicPlayer = (client, message) => __awaiter(void 0, void 0, void 0, funct
     }
     const guildQueue = client.player.getQueue(message.guild.id);
     if (guildQueue) {
-        if (channel.id !== ((_g = message.guild.me) === null || _g === void 0 ? void 0 : _g.voice.channelId)) {
+        if (channel.id !== ((_j = message.guild.me) === null || _j === void 0 ? void 0 : _j.voice.channelId)) {
             errembed.setTitle('❌ 이미 다른 음성 채널에서 재생 중입니다!');
             return message.channel.send({ embeds: [errembed] }).then((m) => {
                 setTimeout(() => {
@@ -285,9 +276,11 @@ const LevelSystem = (client, message) => __awaiter(void 0, void 0, void 0, funct
         if (!levelData || (levelData && levelData.currentXP < nextLevelXP))
             return yield levelSchema_1.default.findOneAndUpdate({ guild_id: message.guild.id, user_id: message.author.id }, { $inc: { totalXP: xpToAdd, currentXP: xpToAdd } }, { upsert: true });
         const newData = yield levelSchema_1.default.findOneAndUpdate({ guild_id: message.guild.id, user_id: message.author.id }, { $inc: { level: 1 }, $set: { currentXP: 0 } }, { upsert: true, new: true });
-        const levelEmbed = new Embed_1.default(client, 'info');
-        levelEmbed.setTitle(`${message.author.username}님의 레벨이 올랐어요!`);
-        levelEmbed.setDescription(`레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`);
-        return message.reply({ embeds: [levelEmbed] });
+        /*const levelEmbed = new Embed(client, 'info')
+        levelEmbed.setTitle(`${message.author.username}님의 레벨이 올랐어요!`)
+        levelEmbed.setDescription(
+          `레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`
+        )*/
+        return message.reply(`${message.author}님의 레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`);
     }
 });

@@ -183,9 +183,9 @@ function StatusUpdate(client) {
         status.shard = shardInfo;
         status.save((err) => {
             if (err)
-                logger.error(`봇 상테 업데이트 오류: ${err}`);
+                logger.error(`봇 상태 업데이트 오류: ${err}`);
         });
-        logger.info('봇 상테 업데이트');
+        logger.info('봇 상태 업데이트');
     });
 }
 function PremiumAlert(client) {

@@ -29,9 +29,7 @@ exports.default = new Command_1.BaseCommand({
     data: new builders_1.SlashCommandBuilder()
         .setName('자가진단')
         .setDescription('자가진단 관련 명령어 입니다')
-        .addSubcommand((option) => option
-        .setName('실행')
-        .setDescription('자가진단을 실행합니다'))
+        .addSubcommand((option) => option.setName('실행').setDescription('자가진단을 실행합니다'))
         .addSubcommand((option) => option
         .setName('설정')
         .setDescription('자가진단을 설정합니다')
@@ -63,7 +61,7 @@ exports.default = new Command_1.BaseCommand({
             let successEmbed = new Embed_1.default(client, 'success');
             let errEmbed = new Embed_1.default(client, 'error');
             let infoEmbed = new Embed_1.default(client, 'info');
-            if (subcommand === "설정") {
+            if (subcommand === '설정') {
                 let name = interaction.options.getString('이름', true);
                 let school = interaction.options.getString('학교', true);
                 let birthday = interaction.options.getString('생년월일', true);
@@ -78,7 +76,7 @@ exports.default = new Command_1.BaseCommand({
                     errEmbed.setDescription('학교정보를 찾지 못했습니다.');
                     return interaction.editReply({ embeds: [errEmbed] });
                 }
-                let login = yield (0, hcs_js_1.login)(schoolResult[0].endpoint, schoolResult[0].schoolCode, name, birthday.toString(), schoolResult[0].searchKey);
+                let login = yield (0, hcs_js_1.login)(schoolResult[0].endpoint, schoolResult[0].schoolCode, name, birthday.toString(), schoolResult[0].searchKey, password);
                 if (!login.success) {
                     errEmbed.setDescription('이름과 생년월일이 올바르게 작성되었는지 확인해주세요.');
                     return interaction.editReply({ embeds: [errEmbed] });
@@ -86,21 +84,12 @@ exports.default = new Command_1.BaseCommand({
                 if (login.agreementRequired) {
                     yield (0, hcs_js_1.updateAgreement)(schoolResult[0].endpoint, login.token);
                 }
-                let token = login.token;
-                let secondLogin = yield (0, hcs_js_1.secondLogin)(schoolResult[0].endpoint, login.token, password);
-                if (!secondLogin.success) {
-                    if (secondLogin.remainingMinutes) {
-                        errEmbed.setDescription(`비밀번호를 5회 이상 실패하여 ${secondLogin.remainingMinutes}분 후에 재시도가 가능합니다.`);
-                        return interaction.editReply({ embeds: [errEmbed] });
-                    }
-                    errEmbed.setDescription('비밀번호가 올바르지 않습니다. 다시 시도해주세요.');
-                    return interaction.editReply({ embeds: [errEmbed] });
-                }
                 infoEmbed.setAuthor('자가진단 등록');
                 infoEmbed.addField('이름', name, true);
                 infoEmbed.addField('생년월일', birthday.toString(), true);
                 infoEmbed.addField('학교', schoolResult[0].name, true);
                 infoEmbed.setDescription('[개인정보처리방침](https://battlebot.kr/help/privacy)에 따라 아래정보로 등록을 진행합니다 \n 동의하실경우 등록이 진행됩니다');
+                infoEmbed.setColor('#2f3136');
                 let buttons = [
                     new discord_js_1.MessageButton()
                         .setCustomId('hcs.ok')
@@ -111,12 +100,17 @@ exports.default = new Command_1.BaseCommand({
                         .setLabel('거부')
                         .setStyle('DANGER')
                 ];
-                yield interaction.editReply({ embeds: [infoEmbed], components: [new discord_js_1.MessageActionRow().addComponents(buttons)] });
-                const collector = (_a = interaction.channel) === null || _a === void 0 ? void 0 : _a.createMessageComponentCollector({ time: 30000 });
+                yield interaction.editReply({
+                    embeds: [infoEmbed],
+                    components: [new discord_js_1.MessageActionRow().addComponents(buttons)]
+                });
+                const collector = (_a = interaction.channel) === null || _a === void 0 ? void 0 : _a.createMessageComponentCollector({
+                    time: 30000
+                });
                 collector === null || collector === void 0 ? void 0 : collector.on('collect', (collerton) => __awaiter(this, void 0, void 0, function* () {
                     if (collerton.user.id !== interaction.user.id)
                         return;
-                    if (collerton.customId === "hcs.ok") {
+                    if (collerton.customId === 'hcs.ok') {
                         collector.stop();
                         if (!login.success)
                             return;
@@ -129,40 +123,51 @@ exports.default = new Command_1.BaseCommand({
                         hcsdb.save((err) => __awaiter(this, void 0, void 0, function* () {
                             if (err) {
                                 errEmbed.setDescription('자가진단 정보 저장중 오류가 발생했습니다.');
-                                return interaction.editReply({ embeds: [errEmbed], components: [] });
+                                return interaction.editReply({
+                                    embeds: [errEmbed],
+                                    components: []
+                                });
                             }
                         }));
                         successEmbed.setDescription('자가진단 등록이 성공적으로 완료 되었습니다!');
-                        yield interaction.editReply({ embeds: [successEmbed], components: [] });
+                        successEmbed.setColor('#2f3136');
+                        yield interaction.editReply({
+                            embeds: [successEmbed],
+                            components: []
+                        });
                     }
-                    if (collerton.customId === "hcs.none") {
+                    if (collerton.customId === 'hcs.none') {
                         collector.stop();
                         errEmbed.setDescription('자가진단 등록이 취소되었습니다.');
                         yield interaction.editReply({ embeds: [errEmbed], components: [] });
                     }
                 }));
             }
-            else if (subcommand === "실행") {
+            else if (subcommand === '실행') {
                 let hcsdb = yield hcsSchemas_1.default.findOne({ user_id: interaction.user.id });
                 if (!hcsdb) {
-                    errEmbed.setDescription('등록된 자가진단 정보가 없습니다 \n \`/자가진단 설정\` 명령어로 **자가진단**을 설정해주세요.');
+                    errEmbed.setDescription('등록된 자가진단 정보가 없습니다 \n `/자가진단 설정` 명령어로 **자가진단**을 설정해주세요.');
                     return yield interaction.editReply({ embeds: [errEmbed] });
                 }
                 else {
                     const school = yield (0, hcs_js_1.searchSchool)(hcsdb.school);
-                    const login = yield (0, hcs_js_1.login)(school[0].endpoint, school[0].schoolCode, hcsdb.name, hcsdb.birthday, school[0].searchKey);
-                    // @ts-ignore
-                    const secondLogin = yield (0, hcs_js_1.secondLogin)(school[0].endpoint, login.token, hcsdb.password);
-                    if (!secondLogin.success) {
-                        if (secondLogin.remainingMinutes) {
-                            errEmbed.setDescription(`비밀번호를 5회 이상 실패하여 ${secondLogin.remainingMinutes}분 후에 재시도가 가능합니다.`);
+                    const login = yield (0, hcs_js_1.login)(school[0].endpoint, school[0].schoolCode, hcsdb.name, hcsdb.birthday, school[0].searchKey, hcsdb.password);
+                    if (!login.success) {
+                        if (login.remainingMinutes) {
+                            errEmbed.setDescription(`비밀번호를 5회 이상 실패하여 ${login.remainingMinutes}분 후에 재시도가 가능합니다.`);
                             return interaction.editReply({ embeds: [errEmbed] });
                         }
-                        errEmbed.setDescription('비밀번호가 올바르지 않습니다. 관리자에게 문의해주세요.');
-                        return interaction.editReply({ embeds: [errEmbed] });
+                        if (login.message) {
+                            errEmbed.setDescription(login.message);
+                        }
+                        else {
+                            errEmbed.setDescription(`자가진단 실행중 오류가 발생했습니다.`);
+                        }
+                        return yield interaction.editReply({ embeds: [errEmbed] });
                     }
-                    yield (0, hcs_js_1.registerSurvey)(school[0].endpoint, secondLogin.token);
+                    yield (0, hcs_js_1.registerSurvey)(school[0].endpoint, login.token);
                     successEmbed.setDescription(`\`${hcsdb.name}\`님의 자가진단이 완료되었습니다`);
+                    successEmbed.setColor('#2f3136');
                     return yield interaction.editReply({ embeds: [successEmbed] });
                 }
             }

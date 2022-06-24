@@ -20,11 +20,14 @@ exports.default = new Command_1.BaseCommand({
     description: '핑을 측정합니다.',
     aliases: ['핑', '측정', 'vld']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
-    let embed = new Embed_1.default(client, 'warn').setTitle('핑 측정중...');
+    let embed = new Embed_1.default(client, 'warn')
+        .setTitle('핑 측정중...')
+        .setColor('#2f3136');
     let m = yield message.reply({
         embeds: [embed]
     });
     embed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136')
         .setTitle('PONG!')
         .addField('메세지 응답속도', `${Number(m.createdAt) - Number(message.createdAt)}ms`, true)
         .addField('API 반응속도', `${client.ws.ping}ms`, true)
@@ -43,6 +46,7 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
             let PingEmbed = new Embed_1.default(client, 'success')
+                .setColor('#2f3136')
                 .setTitle('핑 측정')
                 .addField('웹소켓 지연속도', `${client.ws.ping}ms`)
                 .addField('업타임', `<t:${(Number(client.readyAt) / 1000) | 0}:R>`);

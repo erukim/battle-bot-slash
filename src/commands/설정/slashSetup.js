@@ -32,7 +32,8 @@ exports.default = new Command_1.BaseCommand({
         .setEmoji('✅'));
     let embed = new Embed_1.default(client, 'warn')
         .setTitle('잠시만요!')
-        .setDescription(`Slash Command를 사용하려면 봇 초대할 떄 \`applications.commands\` 스코프를 사용하지 않았을 경우 해당기능을 이용할 수 없습니다. 만약 \`applications.commands\` 스코프를 안 할 경우 [여기를](https://discord.com/api/oauth2/authorize?client_id=${(_a = client.user) === null || _a === void 0 ? void 0 : _a.id}&scope=applications.commands) 클릭하여 허용해 주시기 바랍니다.`);
+        .setDescription(`Slash Command를 사용하려면 봇 초대할 떄 \`applications.commands\` 스코프를 사용하지 않았을 경우 해당기능을 이용할 수 없습니다. 만약 \`applications.commands\` 스코프를 안 할 경우 [여기를](https://discord.com/api/oauth2/authorize?client_id=${(_a = client.user) === null || _a === void 0 ? void 0 : _a.id}&scope=applications.commands) 클릭하여 허용해 주시기 바랍니다.`)
+        .setColor('#2f3136');
     let m = yield message.channel.send({ embeds: [embed], components: [row] });
     const collector = m.createMessageComponentCollector({ time: 5000 });
     collector.on('collect', (i) => __awaiter(void 0, void 0, void 0, function* () {
@@ -40,7 +41,8 @@ exports.default = new Command_1.BaseCommand({
         if (i.user.id === message.author.id) {
             let loading = new Embed_1.default(client, 'info')
                 .setDescription('Slash Command 로딩중...')
-                .setAuthor('잠시만 기다려주십시요...', 'https://cdn.discordapp.com/emojis/667750713698549781.gif?v=1');
+                .setAuthor('잠시만 기다려주십시요...', 'https://cdn.discordapp.com/emojis/667750713698549781.gif?v=1')
+                .setColor('#2f3136');
             yield i.update({ embeds: [loading], components: [] });
             commandManager
                 .slashCommandSetup((_b = message.guild) === null || _b === void 0 ? void 0 : _b.id)
@@ -51,6 +53,7 @@ exports.default = new Command_1.BaseCommand({
                         new Embed_1.default(client, 'success')
                             .setTitle('로딩완료!')
                             .setDescription(`${data === null || data === void 0 ? void 0 : data.length}개의 (/) 명령어를 생성했어요!`)
+                            .setColor('#2f3136')
                     ]
                 });
             })
@@ -62,6 +65,7 @@ exports.default = new Command_1.BaseCommand({
                             new Embed_1.default(client, 'error')
                                 .setTitle('Error!')
                                 .setDescription('제 봇 권한이 부족합니다...\n> 필요한 권한\n`applications.commands`스코프')
+                                .setColor('#2f3136')
                         ]
                     });
                 }
