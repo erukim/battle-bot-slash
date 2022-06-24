@@ -40,8 +40,7 @@ exports.default = new Command_1.BaseCommand({
             const embed = new Embed_1.default(client, 'error')
                 .setTitle(`유튜브`);
             const embedSuccess = new Embed_1.default(client, 'success')
-                .setTitle(`유튜브`)
-                .setColor('#2f3136');
+                .setTitle(`유튜브`);
             const guild = interaction.guild;
             if (!guild) {
                 embed.setDescription('이 명령어는 서버에서만 사용이 가능해요!');

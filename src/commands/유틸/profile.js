@@ -49,8 +49,7 @@ exports.default = new Command_1.BaseCommand({
         .addField(`상태`, (user.presence ? (user.presence.activities.length === 0 ? "없음" : user.presence.activities.join(", ")) : "오프라인"), true)
         .addField(`서버 가입일`, DateFormatting_1.default._format(user.joinedAt, ''), true)
         .addField(`계정 생성일`, DateFormatting_1.default._format(user.user.createdAt, ''), true)
-        .addField(`${(_b = client.user) === null || _b === void 0 ? void 0 : _b.username} 웹 가입일`, (userdb ? DateFormatting_1.default._format(userdb.published_date, '') : "미가입"))
-        .setColor('#2f3136');
+        .addField(`${(_b = client.user) === null || _b === void 0 ? void 0 : _b.username} 웹 가입일`, (userdb ? DateFormatting_1.default._format(userdb.published_date, '') : "미가입"));
     return message.reply({ embeds: [embed] });
 }), {
     data: new builders_1.SlashCommandBuilder()
@@ -90,8 +89,7 @@ exports.default = new Command_1.BaseCommand({
                 .addField(`상태`, (user.presence ? (user.presence.activities.length === 0 ? "없음" : user.presence.activities.join(", ")) : "오프라인"), true)
                 .addField(`서버 가입일`, DateFormatting_1.default._format(user.joinedAt, ''), true)
                 .addField(`계정 생성일`, DateFormatting_1.default._format(user.user.createdAt, ''), true)
-                .addField(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 웹 가입일`, (userdb ? DateFormatting_1.default._format(userdb.published_date, '') : "미가입"))
-                .setColor('#2f3136');
+                .addField(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 웹 가입일`, (userdb ? DateFormatting_1.default._format(userdb.published_date, '') : "미가입"));
             return interaction.reply({ embeds: [embed] });
         });
     }

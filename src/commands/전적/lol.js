@@ -42,7 +42,6 @@ exports.default = new Command_1.BaseCommand({
             yield interaction.editReply({
                 embeds: [
                     new Embed_1.default(client, 'info').setDescription('전적을 불러오는 중..')
-                        .setColor('#2f3136')
                 ]
             });
             let nickname = interaction.options.getString('user', true);
@@ -92,8 +91,7 @@ function getStat(args) {
             }
         });
         let embed = new discord_js_1.MessageEmbed()
-            .setTitle(`\`${args}\`의 프로필`)
-            .setColor('#2f3136');
+            .setTitle(`\`${args}\`의 프로필`);
         let leagueStatus = data.league_stats[0];
         if (leagueStatus.tier_info.tier)
             embed.setDescription(`${leagueStatus.queue_info.queue_translate} - ${leagueStatus.tier_info.tier} ${leagueStatus.tier_info.division} (${leagueStatus.tier_info.lp}LP) \n ${leagueStatus.win}승 / ${leagueStatus.lose}패 / ${(leagueStatus.win / (leagueStatus.win + leagueStatus.lose) * 100).toFixed(2)}%`);

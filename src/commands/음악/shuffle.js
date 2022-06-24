@@ -22,8 +22,7 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     let errembed = new Embed_1.default(client, 'error');
-    let sucessembed = new Embed_1.default(client, 'success')
-        .setColor('#2f3136');
+    let sucessembed = new Embed_1.default(client, 'success');
     if (!message.guild) {
         errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
         return message.reply({ embeds: [errembed] });
@@ -59,8 +58,7 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply();
             let errembed = new Embed_1.default(client, 'error');
-            let sucessembed = new Embed_1.default(client, 'success')
-                .setColor('#2f3136');
+            let sucessembed = new Embed_1.default(client, 'success');
             if (!interaction.guild) {
                 errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
                 return interaction.editReply({ embeds: [errembed] });

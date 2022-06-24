@@ -96,7 +96,6 @@ exports.default = new Command_1.BaseCommand({
                     managerId: member.id
                 });
                 let embedAdd = new Embed_1.default(client, 'info')
-                    .setColor('#2f3136')
                     .setTitle('경고')
                     .setDescription('아래와 같이 경고가 추가되었습니다')
                     .setFields({ name: '경고 ID', value: insertRes[0]._id.toString() }, {
@@ -126,7 +125,7 @@ exports.default = new Command_1.BaseCommand({
                     _id: warningIDtoObject
                 });
                 const embedRemove = new discord_js_1.MessageEmbed()
-                    .setColor('#2f3136')
+                    .setColor('#008000')
                     .setTitle('경고')
                     .setDescription('아래와 같이 경고가 삭감되었습니다')
                     .addField('유저', `<@${user === null || user === void 0 ? void 0 : user.id}>` + '(' + '`' + (user === null || user === void 0 ? void 0 : user.id) + '`' + ')', true)
@@ -154,7 +153,7 @@ exports.default = new Command_1.BaseCommand({
                     value: '사유: ' + reasons.reason
                 }));
                 const embedList = new discord_js_1.MessageEmbed()
-                    .setColor('#2f3136')
+                    .setColor('#ff7f00')
                     .setTitle('경고')
                     .setDescription(`${user === null || user === void 0 ? void 0 : user.username}님의 ${insertResLength.length}개의 경고중 최근 5개의 경고 기록입니다`)
                     .setFooter(`페이지 - ${warningID ? warningID : 1}/${Math.ceil(insertResLength.length / 5)}`)

@@ -48,7 +48,7 @@ exports.default = new Event_1.Event('messageCreate', (client, message) => __awai
     }
     catch (error) {
         if ((error === null || error === void 0 ? void 0 : error.code) === discord_js_1.Constants.APIErrors.MISSING_PERMISSIONS) {
-            return;
+            return message.reply('해당 명령어를 실행하기 위한 권한이 부족합니다!');
         }
         errorManager.report(error, { executer: message, isSend: true });
     }
@@ -163,8 +163,7 @@ const MusicPlayer = (client, message) => __awaiter(void 0, void 0, void 0, funct
     }
     yield message.delete();
     const errembed = new Embed_1.default(client, 'error');
-    const sucessembed = new Embed_1.default(client, 'success')
-        .setColor('#2f3136');
+    const sucessembed = new Embed_1.default(client, 'success');
     const user = (_f = message.guild) === null || _f === void 0 ? void 0 : _f.members.cache.get(message.author.id);
     const channel = user === null || user === void 0 ? void 0 : user.voice.channel;
     if (!channel) {
@@ -286,11 +285,9 @@ const LevelSystem = (client, message) => __awaiter(void 0, void 0, void 0, funct
         if (!levelData || (levelData && levelData.currentXP < nextLevelXP))
             return yield levelSchema_1.default.findOneAndUpdate({ guild_id: message.guild.id, user_id: message.author.id }, { $inc: { totalXP: xpToAdd, currentXP: xpToAdd } }, { upsert: true });
         const newData = yield levelSchema_1.default.findOneAndUpdate({ guild_id: message.guild.id, user_id: message.author.id }, { $inc: { level: 1 }, $set: { currentXP: 0 } }, { upsert: true, new: true });
-        /*const levelEmbed = new Embed(client, 'info')
-        levelEmbed.setTitle(`${message.author.username}님의 레벨이 올랐어요!`)
-        levelEmbed.setDescription(
-          `레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`
-        )*/
-        return message.reply(`${message.author}님의 레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`);
+        const levelEmbed = new Embed_1.default(client, 'info');
+        levelEmbed.setTitle(`${message.author.username}님의 레벨이 올랐어요!`);
+        levelEmbed.setDescription(`레벨이 \`LV.${level ? level : 0} -> LV.${newData.level}\`로 올랐어요!`);
+        return message.reply({ embeds: [levelEmbed] });
     }
 });

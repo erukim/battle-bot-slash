@@ -74,31 +74,22 @@ exports.default = new Command_1.BaseCommand({
                 .setRequired(false));
             (0, discord_modals_1.showModal)(modal, { client: client, interaction: interaction });
             client.on('modalSubmit', (modal) => __awaiter(this, void 0, void 0, function* () {
-                if (modal.customId === 'modal.webalert') {
-                    const webalertTitle = modal.fields.getTextInputValue('modal.webalert.title');
-                    const webalertDescription = modal.fields.getTextInputValue('modal.webalert.description');
-                    const webalertLinktitle = modal.fields.getTextInputValue('modal.webalert.linktitle');
-                    const webalertLink = modal.fields.getTextInputValue('modal.webalert.link');
-                    const webalertUser = modal.fields.getTextInputValue('modal.webalert.user');
+                if (modal.customId === "modal.webalert") {
+                    const webalertTitle = modal.getTextInputValue('modal.webalert.title');
+                    const webalertDescription = modal.getTextInputValue('modal.webalert.description');
+                    const webalertLinktitle = modal.getTextInputValue('modal.webalert.linktitle');
+                    const webalertLink = modal.getTextInputValue('modal.webalert.link');
+                    const webalertUser = modal.getTextInputValue('modal.webalert.user');
                     yield modal.deferReply({ ephemeral: true });
                     if (webalertLinktitle && !webalertLink) {
-                        modal.followUp({
-                            content: '링크를 넣을경우 링크 제목과 링크 향목을 필수로 입력해야합니다',
-                            ephemeral: true
-                        });
+                        return modal.followUp({ content: '링크를 넣을경우 링크 제목과 링크 향목을 필수로 입력해야합니다', ephemeral: true });
                     }
                     if (!webalertLinktitle && webalertLink) {
-                        modal.followUp({
-                            content: '링크를 넣을경우 링크 제목과 링크 향목을 필수로 입력해야합니다',
-                            ephemeral: true
-                        });
+                        return modal.followUp({ content: '링크를 넣을경우 링크 제목과 링크 향목을 필수로 입력해야합니다', ephemeral: true });
                     }
                     yield (0, WebAlertSender_1.default)(webalertTitle, webalertDescription, { url: webalertLink, value: webalertLinktitle }, webalertUser)
                         .then(() => {
-                        return modal.followUp({
-                            content: '성공적으로 알림을 추가했습니다',
-                            ephemeral: true
-                        });
+                        return modal.followUp({ content: '성공적으로 알림을 추가했습니다', ephemeral: true });
                     })
                         .catch((e) => {
                         return modal.followUp({ content: e.message, ephemeral: true });

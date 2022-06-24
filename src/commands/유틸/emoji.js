@@ -21,8 +21,7 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['이모지', 'dlahwl', 'emoji']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     let errEmbed = new Embed_1.default(client, 'error');
-    let successEmbed = new Embed_1.default(client, 'success')
-        .setColor('#2f3136');
+    let successEmbed = new Embed_1.default(client, 'success');
     if (!message.guild) {
         errEmbed.setDescription('이 명령어는 서버에서만 사용 가능합니다');
         return message.reply({ embeds: [errEmbed] });
@@ -56,8 +55,7 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply();
             let errEmbed = new Embed_1.default(client, 'error');
-            let successEmbed = new Embed_1.default(client, 'success')
-                .setColor('#2f3136');
+            let successEmbed = new Embed_1.default(client, 'success');
             let stringemoji = interaction.options.getString('이모지', true);
             if (!interaction.guild) {
                 errEmbed.setDescription('이 명령어는 서버에서만 사용 가능합니다');

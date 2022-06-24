@@ -33,8 +33,7 @@ exports.default = new Command_1.ButtonInteraction({
     let channelMessages = yield ((_c = interaction.channel) === null || _c === void 0 ? void 0 : _c.messages.fetch({
         limit: 100
     }));
-    const LoadingEmbed = new Embed_1.default(client, 'info').setTitle('채팅 기록을 불러오는 중입니다')
-        .setColor('#2f3136');
+    const LoadingEmbed = new Embed_1.default(client, 'info').setTitle('채팅 기록을 불러오는 중입니다');
     const NoMessageEmbed = new Embed_1.default(client, 'error').setTitle('채팅 기록을 불러오지 못했습니다');
     if (!channelMessages)
         return interaction.editReply({ embeds: [NoMessageEmbed] });
@@ -57,13 +56,11 @@ exports.default = new Command_1.ButtonInteraction({
         });
     }));
     MessageDB = MessageDB.reverse();
-    const SaveingEmbed = new Embed_1.default(client, 'info').setTitle('채팅 기록을 저장하는 중입니다')
-        .setColor('#2f3136');
+    const SaveingEmbed = new Embed_1.default(client, 'info').setTitle('채팅 기록을 저장하는 중입니다');
     yield interaction.editReply({ embeds: [SaveingEmbed] });
     yield ticketSchema_1.default.updateOne({ guildId: (_e = interaction.guild) === null || _e === void 0 ? void 0 : _e.id, channelId: (_f = interaction.channel) === null || _f === void 0 ? void 0 : _f.id }, { $set: { messages: MessageDB } });
     const successembed = new Embed_1.default(client, 'success')
         .setTitle('티켓이 저장되었습니다')
-        .setDescription(`[여기](${(_g = config_1.default.web) === null || _g === void 0 ? void 0 : _g.baseurl}/guilds/${(_h = interaction.guild) === null || _h === void 0 ? void 0 : _h.id}/ticket/${ticket.ticketId})에서 확인할 수 있습니다`)
-        .setColor('#2f3136');
+        .setDescription(`[여기](${(_g = config_1.default.web) === null || _g === void 0 ? void 0 : _g.baseurl}/guilds/${(_h = interaction.guild) === null || _h === void 0 ? void 0 : _h.id}/ticket/${ticket.ticketId})에서 확인할 수 있습니다`);
     yield interaction.editReply({ embeds: [successembed] });
 }));

@@ -82,7 +82,6 @@ exports.default = new Command_1.ButtonInteraction({
             VoteCooldown.set(`vote_${interaction.guild.id}_${interaction.user.id}_${interaction.message.id}`, Date.now());
             const voteEmbed = VoteEmbed(newVoteItem.vote_items, interaction.message.embeds[0].description);
             SuccessEmbed.setTitle('성공적으로 투표에 참가했어요!');
-            SuccessEmbed.setColor('#2f3136');
             interaction.editReply({ embeds: [SuccessEmbed] });
             return message.edit({ embeds: [voteEmbed] });
         }

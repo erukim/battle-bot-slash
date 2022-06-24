@@ -21,8 +21,7 @@ exports.default = new Command_1.ButtonInteraction({
 }, (client, interaction) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     yield interaction.deferReply({ ephemeral: true });
-    const replyTicket = new Embed_1.default(client, 'info').setDescription(`5초뒤에 티켓이 종료됩니다!,  <@!${interaction.user.id}>`)
-        .setColor('#2f3136');
+    const replyTicket = new Embed_1.default(client, 'info').setDescription(`5초뒤에 티켓이 종료됩니다!,  <@!${interaction.user.id}>`);
     yield interaction.editReply({ embeds: [replyTicket] });
     const ticketDB = yield ticketSchema_1.default.findOne({
         guildId: (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.id,
@@ -53,8 +52,7 @@ exports.default = new Command_1.ButtonInteraction({
         const componets = new discord_js_1.MessageActionRow()
             .addComponents(buttonSave)
             .addComponents(buttonDelete);
-        const replyCloseTicket = new Embed_1.default(client, 'info').setDescription(`티켓이 종료되었습니다!, <@!${interaction.user.id}>`)
-            .setColor('#2f3136');
+        const replyCloseTicket = new Embed_1.default(client, 'info').setDescription(`티켓이 종료되었습니다!, <@!${interaction.user.id}>`);
         interaction.channelId;
         const channel = (_f = interaction.guild) === null || _f === void 0 ? void 0 : _f.channels.cache.get((_g = interaction.channel) === null || _g === void 0 ? void 0 : _g.id);
         yield channel.permissionOverwrites.edit(ticketDB.userId, {

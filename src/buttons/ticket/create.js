@@ -67,8 +67,7 @@ exports.default = new Command_1.ButtonInteraction({
             });
             const embed = new Embed_1.default(client, 'success')
                 .setTitle('티켓')
-                .setDescription(`<@${interaction.user.id}> 님의 티켓 \n 티켓 종료를 원하시면 🔒 닫기 버튼을 눌러주세요`)
-                .setColor('#2f3136');
+                .setDescription(`<@${interaction.user.id}> 님의 티켓 \n 티켓 종료를 원하시면 🔒 닫기 버튼을 눌러주세요`);
             const buttonSave = new discord_js_1.MessageButton()
                 .setLabel('저장')
                 .setStyle('SUCCESS')
