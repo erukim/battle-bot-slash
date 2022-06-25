@@ -26,9 +26,7 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['주식', 'stock', '주식거래', '주식거래하기']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     const type = args[0];
-    const embed = new Embed_1.default(client, 'info')
-        .setTitle('주식')
-        .setColor('#2f3136');
+    const embed = new Embed_1.default(client, 'info').setTitle('주식').setColor('#2f3136');
     if (type === '검색') {
         const keyword = args.slice(1).join(' ');
         const results = yield (0, stock_1.searchStockList)(keyword);
@@ -74,6 +72,10 @@ exports.default = new Command_1.BaseCommand({
         const quantity = parseInt(args[1]);
         if (!quantity) {
             embed.setDescription(`매수하실 주식의 수량을 숫자만 입력해주세요.`);
+            return message.reply({ embeds: [embed] });
+        }
+        if (quantity < 1) {
+            embed.setDescription(`매수하실 주식의 수량은 1이상의 숫자만 입력해주세요.`);
             return message.reply({ embeds: [embed] });
         }
         const results = yield (0, stock_1.searchStockList)(keyword);
@@ -201,6 +203,11 @@ exports.default = new Command_1.BaseCommand({
             embed.setDescription(`매도하실 주식의 수량을 숫자만 입력해주세요.`);
             return message.reply({ embeds: [embed] });
         }
+        if (quantity < 1) {
+            embed.setDescription(`매수하실 주식의 수량을 1이상의 숫자만 입력해주세요.`);
+            return message.reply({ embeds: [embed] });
+        }
+        embed.setDescription(`매수하실 주식의 수량을 숫자만 입력해주세요.`);
         const results = yield (0, stock_1.searchStockList)(keyword);
         if (!results || (results === null || results === void 0 ? void 0 : results.items.length) == 0) {
             embed.setDescription(`${keyword} 검색 결과가 없습니다.`);

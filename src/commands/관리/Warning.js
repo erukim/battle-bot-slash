@@ -18,6 +18,7 @@ const Command_1 = require("../../structures/Command");
 const Embed_1 = __importDefault(require("../../utils/Embed"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const Warning_1 = __importDefault(require("../../schemas/Warning"));
+const WarnHandler_1 = require("../../utils/WarnHandler");
 let ObjectId = mongoose_1.default.Types.ObjectId;
 // @ts-ignore
 String.prototype.toObjectId = function () {
@@ -89,22 +90,7 @@ exports.default = new Command_1.BaseCommand({
                 reason = '없음';
             let subcommand = interaction.options.getSubcommand();
             if (subcommand === '지급') {
-                let insertRes = yield Warning_1.default.insertMany({
-                    userId: user === null || user === void 0 ? void 0 : user.id,
-                    guildId: (_b = interaction.guild) === null || _b === void 0 ? void 0 : _b.id,
-                    reason: reason,
-                    managerId: member.id
-                });
-                let embedAdd = new Embed_1.default(client, 'info')
-                    .setColor('#2f3136')
-                    .setTitle('경고')
-                    .setDescription('아래와 같이 경고가 추가되었습니다')
-                    .setFields({ name: '경고 ID', value: insertRes[0]._id.toString() }, {
-                    name: '유저',
-                    value: `<@${user === null || user === void 0 ? void 0 : user.id}>` + '(' + '`' + (user === null || user === void 0 ? void 0 : user.id) + '`' + ')',
-                    inline: true
-                }, { name: '사유', value: reason, inline: true });
-                return interaction.editReply({ embeds: [embedAdd] });
+                return (0, WarnHandler_1.userWarnAdd)(client, user === null || user === void 0 ? void 0 : user.id, (_b = interaction.guild) === null || _b === void 0 ? void 0 : _b.id, reason, interaction.user.id, interaction);
             }
             else if (subcommand === '차감') {
                 let warningID = interaction.options.getString('id');

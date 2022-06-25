@@ -16,7 +16,7 @@ exports.userWarnAdd = void 0;
 const LogSettingSchema_1 = __importDefault(require("../schemas/LogSettingSchema"));
 const Warning_1 = __importDefault(require("../schemas/Warning"));
 const Embed_1 = __importDefault(require("./Embed"));
-const userWarnAdd = (client, userId, guildId, reason, managerId) => __awaiter(void 0, void 0, void 0, function* () {
+const userWarnAdd = (client, userId, guildId, reason, managerId, interaction) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     const insertRes = yield Warning_1.default.insertMany({
         userId: userId,
@@ -32,6 +32,9 @@ const userWarnAdd = (client, userId, guildId, reason, managerId) => __awaiter(vo
         value: `<@${userId}>` + '(' + '`' + userId + '`' + ')',
         inline: true
     }, { name: '사유', value: reason, inline: true });
+    if (interaction) {
+        interaction.editReply({ embeds: [embedAdd] });
+    }
     const logSetting = yield LogSettingSchema_1.default.findOne({ guild_id: guildId });
     const guildLogChannel = (_a = client.guilds.cache
         .get(guildId)) === null || _a === void 0 ? void 0 : _a.channels.cache.get(logSetting === null || logSetting === void 0 ? void 0 : logSetting.guild_channel_id);
