@@ -22,7 +22,8 @@ exports.default = new Command_1.BaseCommand({
     description: '노래의 재생목록을 확인합니다',
     aliases: ['재생목록', 'musicqueue', '큐']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
-    let errembed = new Embed_1.default(client, 'error');
+    let errembed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
     let sucessembed = new Embed_1.default(client, 'success')
         .setColor('#2f3136');
     if (!message.guild) {
@@ -60,8 +61,9 @@ exports.default = new Command_1.BaseCommand({
     },
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
-            let errembed = new Embed_1.default(client, 'error');
+            yield interaction.deferReply({ ephemeral: true });
+            let errembed = new Embed_1.default(client, 'error')
+                .setColor('#2f3136');
             let sucessembed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             if (!interaction.guild) {
@@ -93,7 +95,6 @@ exports.default = new Command_1.BaseCommand({
                     return `**${i + pageStart + 1}**. [${m.title}](${m.url}) ${m.duration} - ${m.requestedBy}`;
                 });
                 if (tracks.length) {
-                    sucessembed.setColor('#2f3136');
                     sucessembed.setDescription(`\n${tracks.join('\n')}${queue.tracks.length > pageEnd
                         ? `\n... + ${queue.tracks.length - pageEnd}`
                         : ''}`);

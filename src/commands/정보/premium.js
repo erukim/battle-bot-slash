@@ -58,7 +58,7 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
+            yield interaction.deferReply({ ephemeral: true });
             let embed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136')
                 .setTitle(`${(_a = client.user) === null || _a === void 0 ? void 0 : _a.username} 프리미엄`);

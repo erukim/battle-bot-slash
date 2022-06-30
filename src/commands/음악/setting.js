@@ -26,7 +26,8 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['뮤직세팅', '노래세팅', 'musicset', '음악세팅']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    let errembed = new Embed_1.default(client, 'error');
+    let errembed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
     let musicEmbed = new MusicEmbed_1.default(client);
     if (!message.guild) {
         errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
@@ -69,8 +70,9 @@ exports.default = new Command_1.BaseCommand({
     },
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
-            let errembed = new Embed_1.default(client, 'error');
+            yield interaction.deferReply({ ephemeral: true });
+            let errembed = new Embed_1.default(client, 'error')
+                .setColor('#2f3136');
             let musicEmbed = new MusicEmbed_1.default(client);
             if (!interaction.guild) {
                 errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');

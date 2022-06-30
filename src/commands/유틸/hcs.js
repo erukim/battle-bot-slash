@@ -56,11 +56,14 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
+            yield interaction.deferReply({ ephemeral: true });
             let subcommand = interaction.options.getSubcommand();
-            let successEmbed = new Embed_1.default(client, 'success');
-            let errEmbed = new Embed_1.default(client, 'error');
-            let infoEmbed = new Embed_1.default(client, 'info');
+            let successEmbed = new Embed_1.default(client, 'success')
+                .setColor('#2f3136');
+            let errEmbed = new Embed_1.default(client, 'error')
+                .setColor('#2f3136');
+            let infoEmbed = new Embed_1.default(client, 'info')
+                .setColor('#2f3136');
             if (subcommand === '설정') {
                 let name = interaction.options.getString('이름', true);
                 let school = interaction.options.getString('학교', true);
@@ -89,7 +92,6 @@ exports.default = new Command_1.BaseCommand({
                 infoEmbed.addField('생년월일', birthday.toString(), true);
                 infoEmbed.addField('학교', schoolResult[0].name, true);
                 infoEmbed.setDescription('[개인정보처리방침](https://battlebot.kr/help/privacy)에 따라 아래정보로 등록을 진행합니다 \n 동의하실경우 등록이 진행됩니다');
-                infoEmbed.setColor('#2f3136');
                 let buttons = [
                     new discord_js_1.MessageButton()
                         .setCustomId('hcs.ok')
@@ -130,7 +132,6 @@ exports.default = new Command_1.BaseCommand({
                             }
                         }));
                         successEmbed.setDescription('자가진단 등록이 성공적으로 완료 되었습니다!');
-                        successEmbed.setColor('#2f3136');
                         yield interaction.editReply({
                             embeds: [successEmbed],
                             components: []
@@ -167,7 +168,6 @@ exports.default = new Command_1.BaseCommand({
                     }
                     yield (0, hcs_js_1.registerSurvey)(school[0].endpoint, login.token);
                     successEmbed.setDescription(`\`${hcsdb.name}\`님의 자가진단이 완료되었습니다`);
-                    successEmbed.setColor('#2f3136');
                     return yield interaction.editReply({ embeds: [successEmbed] });
                 }
             }

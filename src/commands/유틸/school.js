@@ -26,6 +26,7 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     if (!args[0]) {
         let embed = new Embed_1.default(client, 'error')
+            .setColor('#2f3136')
             .setTitle(`이런...`)
             .setDescription(`학교 이름을 적어주세요 \n\n \`${config_1.default.bot.prefix}급식 <학교명>\``);
         return message.reply({ embeds: [embed] });
@@ -81,7 +82,8 @@ exports.default = new Command_1.BaseCommand({
                             if (((_a = e.response) === null || _a === void 0 ? void 0 : _a.status) === 404) {
                                 let mealembed = new Embed_1.default(client, 'warn')
                                     .setTitle(`${value[2]} 급식`)
-                                    .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`);
+                                    .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`)
+                                    .setColor('#2f3136');
                                 yield i.reply({ embeds: [mealembed], components: [] });
                             }
                         }));
@@ -96,7 +98,8 @@ exports.default = new Command_1.BaseCommand({
             if (((_b = e.response) === null || _b === void 0 ? void 0 : _b.status) === 404) {
                 let mealembed = new Embed_1.default(client, 'warn')
                     .setTitle(`${args[0]} 급식`)
-                    .setDescription(`어라... ${args[0]}을 찾을 수 없어요...`);
+                    .setDescription(`어라... ${args[0]}을 찾을 수 없어요...`)
+                    .setColor('#2f3136');
                 yield msg.edit({ embeds: [mealembed], components: [] });
             }
         }));
@@ -119,8 +122,9 @@ exports.default = new Command_1.BaseCommand({
             if (!school) {
                 let embed = new Embed_1.default(client, 'error')
                     .setTitle(`이런...`)
-                    .setDescription(`학교 이름을 적어주세요 \n\n \`${config_1.default.bot.prefix}급식 <학교명>\``);
-                return interaction.reply({ embeds: [embed] });
+                    .setDescription(`학교 이름을 적어주세요 \n\n \`${config_1.default.bot.prefix}급식 <학교명>\``)
+                    .setColor('#2f3136');
+                return interaction.reply({ embeds: [embed], ephemeral: true });
             }
             else {
                 let embed = new Embed_1.default(client, 'info')
@@ -174,7 +178,8 @@ exports.default = new Command_1.BaseCommand({
                                     if (((_b = e.response) === null || _b === void 0 ? void 0 : _b.status) === 404) {
                                         let mealembed = new Embed_1.default(client, 'warn')
                                             .setTitle(`${value[2]} 급식`)
-                                            .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`);
+                                            .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`)
+                                            .setColor('#2f3136');
                                         yield i.reply({ embeds: [mealembed], components: [] });
                                     }
                                 }));
@@ -189,7 +194,8 @@ exports.default = new Command_1.BaseCommand({
                     if (((_c = e.response) === null || _c === void 0 ? void 0 : _c.status) === 404) {
                         let mealembed = new Embed_1.default(client, 'warn')
                             .setTitle(`${school} 급식`)
-                            .setDescription(`어라... ${school}을 찾을 수 없어요...`);
+                            .setDescription(`어라... ${school}을 찾을 수 없어요...`)
+                            .setColor('#2f3136');
                         return yield interaction.editReply({ embeds: [mealembed], components: [] });
                     }
                 }));

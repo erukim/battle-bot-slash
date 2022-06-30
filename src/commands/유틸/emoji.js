@@ -20,7 +20,8 @@ exports.default = new Command_1.BaseCommand({
     description: '이모지를 확대합니다',
     aliases: ['이모지', 'dlahwl', 'emoji']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
-    let errEmbed = new Embed_1.default(client, 'error');
+    let errEmbed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
     let successEmbed = new Embed_1.default(client, 'success')
         .setColor('#2f3136');
     if (!message.guild) {
@@ -54,8 +55,9 @@ exports.default = new Command_1.BaseCommand({
     },
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
-            let errEmbed = new Embed_1.default(client, 'error');
+            yield interaction.deferReply({ ephemeral: true });
+            let errEmbed = new Embed_1.default(client, 'error')
+                .setColor('#2f3136');
             let successEmbed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             let stringemoji = interaction.options.getString('이모지', true);

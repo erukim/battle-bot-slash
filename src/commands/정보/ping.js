@@ -50,7 +50,7 @@ exports.default = new Command_1.BaseCommand({
                 .setTitle('핑 측정')
                 .addField('웹소켓 지연속도', `${client.ws.ping}ms`)
                 .addField('업타임', `<t:${(Number(client.readyAt) / 1000) | 0}:R>`);
-            interaction.reply({ embeds: [PingEmbed] });
+            interaction.reply({ embeds: [PingEmbed], ephemeral: true });
         });
     }
 });

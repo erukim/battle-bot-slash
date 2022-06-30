@@ -38,7 +38,7 @@ exports.default = new Command_1.BaseCommand({
     },
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
+            yield interaction.deferReply({ ephemeral: true });
             yield interaction.editReply({
                 embeds: [
                     new Embed_1.default(client, 'info').setDescription('전적을 불러오는 중..')

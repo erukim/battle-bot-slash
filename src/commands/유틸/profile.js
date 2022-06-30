@@ -27,6 +27,7 @@ exports.default = new Command_1.BaseCommand({
         let embed = new Embed_1.default(client, 'error');
         embed.setTitle('이런...');
         embed.setDescription('이 명령어는 서버에서만 사용 가능합니다');
+        embed.setColor('#2f3136');
         return message.reply({ embeds: [embed] });
     }
     if (!args[0])
@@ -38,6 +39,7 @@ exports.default = new Command_1.BaseCommand({
         let embed = new Embed_1.default(client, 'error');
         embed.setTitle('이런...');
         embed.setDescription('찾을 수 없는 유저입니다');
+        embed.setColor('#2f3136');
         return message.reply({ embeds: [embed] });
     }
     let userdb = yield userSchema_1.default.findOne({ id: user.id });
@@ -71,7 +73,7 @@ exports.default = new Command_1.BaseCommand({
                 let embed = new Embed_1.default(client, 'error');
                 embed.setTitle('이런...');
                 embed.setDescription('이 명령어는 서버에서만 사용 가능합니다');
-                return interaction.reply({ embeds: [embed] });
+                return interaction.reply({ embeds: [embed], ephemeral: true });
             }
             let seluser = interaction.options.getUser('user');
             let user = interaction.guild.members.cache.get(seluser === null || seluser === void 0 ? void 0 : seluser.id);

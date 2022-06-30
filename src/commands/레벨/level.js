@@ -38,9 +38,11 @@ exports.default = new Command_1.BaseCommand({
     },
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
-            let errEmbed = new Embed_1.default(client, 'error');
-            let successEmbed = new Embed_1.default(client, 'success');
+            yield interaction.deferReply({ ephemeral: true });
+            let errEmbed = new Embed_1.default(client, 'error')
+                .setColor('#2f3136');
+            let successEmbed = new Embed_1.default(client, 'success')
+                .setColor('#2f3136');
             let user = interaction.options.getUser('유저', false);
             const isPremium = yield (0, checkPremium_1.checkUserPremium)(client, interaction.user);
             if (!interaction.guild) {
@@ -51,14 +53,12 @@ exports.default = new Command_1.BaseCommand({
                 const levelDB = yield levelSchema_1.default.findOne({ guild_id: interaction.guild.id, user_id: interaction.user.id });
                 if (!levelDB) {
                     successEmbed.setTitle(`${interaction.user.username}님의 레벨 정보`);
-                    successEmbed.setColor('#2f3136');
                     successEmbed.setDescription(`현재 \`LV.0\`입니다. 다음 레벨까지 \`0XP / 15XP\` 남았습니다.\n
           ${isPremium ? "**배틀이 프리미엄으로 30% 경험치 부스터가 적용되었어요**" : `**[여기](${config_1.default.web.baseurl}/premium)에서 프리미엄을 사용하시면 레벨 30% 부스터를 사용할 수 있어요!**`}`);
                     return interaction.editReply({ embeds: [successEmbed] });
                 }
                 else {
                     successEmbed.setTitle(`${interaction.user.username}님의 레벨 정보`);
-                    successEmbed.setColor('#2f3136');
                     successEmbed.setDescription(`현재 \`LV.${levelDB.level ? levelDB.level : 0}\`입니다. 다음 레벨까지 \`${levelDB.currentXP.toFixed(1)}XP / ${(!levelDB.level ? 1 : levelDB.level + 1) * 13}XP\` 남았습니다.\n
           ${isPremium ? "**배틀이 프리미엄으로 30% 경험치 부스터가 적용되었어요**" : `**[여기](${config_1.default.web.baseurl}/premium)에서 프리미엄을 사용하시면 레벨 30% 부스터를 사용할 수 있어요!**`}`);
                     return interaction.editReply({ embeds: [successEmbed] });
@@ -68,13 +68,11 @@ exports.default = new Command_1.BaseCommand({
                 const levelDB = yield levelSchema_1.default.findOne({ guild_id: interaction.guild.id, user_id: user.id });
                 if (!levelDB) {
                     successEmbed.setTitle(`${user.username}님의 레벨 정보`);
-                    successEmbed.setColor('#2f3136');
                     successEmbed.setDescription(`현재 \`LV.0\`입니다. 다음 레벨까지 \`0XP / 15XP\` 남았습니다.`);
                     return interaction.editReply({ embeds: [successEmbed] });
                 }
                 else {
                     successEmbed.setTitle(`${user.username}님의 레벨 정보`);
-                    successEmbed.setColor('#2f3136');
                     successEmbed.setDescription(`현재 \`LV.${levelDB.level ? levelDB.level : 0}\`입니다. 다음 레벨까지 \`${levelDB.currentXP.toFixed(1)}XP / ${(!levelDB.level ? 1 : levelDB.level + 1) * 13}XP\` 남았습니다.`);
                     return interaction.editReply({ embeds: [successEmbed] });
                 }

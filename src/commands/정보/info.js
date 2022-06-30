@@ -76,7 +76,7 @@ exports.default = new Command_1.BaseCommand({
             embed.addField('업타임', `${DateFormatting_1.default.relative(new Date(Date.now() - process.uptime() * 1000))}`, true);
             embed.addField('시스템정보', `\`\`\`diff\n- Discord.js: ${discord_js_1.version} \n- Node.js: ${process.version}\n- OS: ${process.platform} - Memory: ${memory()} \`\`\``);
             embed.addField('유용한 링크', `[서포트 서버](https://discord.gg/WtGq7D7BZm) | [웹 대시보드](${config_1.default.web.baseurl}) | [깃허브](${package_json_1.repository}) | [개인정보처리방침](${config_1.default.web.baseurl}/help/privacy) | [상태](${config_1.default.web.baseurl}/status)`);
-            return interaction.reply({ embeds: [embed], components: [row] });
+            return interaction.reply({ embeds: [embed], components: [row], ephemeral: true });
         });
     }
 });

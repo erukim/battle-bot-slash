@@ -23,7 +23,8 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['뮤직설정해제', '노래세팅해제', 'musicsetdel']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    let errembed = new Embed_1.default(client, 'error');
+    let errembed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
     let sucessembed = new Embed_1.default(client, 'success')
         .setColor('#2f3136');
     if (!message.guild) {
@@ -56,8 +57,9 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
-            let errembed = new Embed_1.default(client, 'error');
+            yield interaction.deferReply({ ephemeral: true });
+            let errembed = new Embed_1.default(client, 'error')
+                .setColor('#2f3136');
             let sucessembed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             if (!interaction.guild) {

@@ -41,7 +41,7 @@ exports.default = new Command_1.BaseCommand({
     },
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
+            yield interaction.deferReply({ ephemeral: true });
             let nickname = interaction.options.getString('user', true);
             let mode = interaction.options.getString('mode', true);
             return yield (0, pubg_1.playerStats)(nickname, mode, interaction);
