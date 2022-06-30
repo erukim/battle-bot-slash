@@ -22,7 +22,8 @@ exports.default = new Command_1.ButtonInteraction({
     yield interaction.deferReply({ ephemeral: true });
     const role_id = interaction.customId.split('_')[1];
     const ErrEmbed = new Embed_1.default(client, 'error');
-    const SuccessEmbed = new Embed_1.default(client, 'success');
+    const SuccessEmbed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     const autoroleDB = yield AutoRoleSchema_1.default.findOne({
         guild_id: (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.id,
         message_id: interaction.message.id

@@ -25,9 +25,12 @@ exports.default = new Command_1.ButtonInteraction({
     yield interaction.deferReply({ ephemeral: true });
     if (!interaction.channel)
         return;
-    const lodingEmbed = new Embed_1.default(client, 'info');
-    const errorEmbed = new Embed_1.default(client, 'error');
-    const successEmbed = new Embed_1.default(client, 'success');
+    const lodingEmbed = new Embed_1.default(client, 'info')
+        .setColor('#2f3136');
+    const errorEmbed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
+    const successEmbed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     lodingEmbed.setDescription('**유튜브에서 정보를 찾아보는 중이에요!**');
     yield interaction.editReply({ embeds: [lodingEmbed] });
     const userdb = yield userSchema_1.default.findOne({ id: interaction.user.id });

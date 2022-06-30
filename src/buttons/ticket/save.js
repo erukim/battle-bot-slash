@@ -26,7 +26,8 @@ exports.default = new Command_1.ButtonInteraction({
         guildId: (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.id,
         channelId: (_b = interaction.channel) === null || _b === void 0 ? void 0 : _b.id
     });
-    const ErrorEmbed = new Embed_1.default(client, 'error').setTitle('찾을 수 없는 티켓 정보입니다');
+    const ErrorEmbed = new Embed_1.default(client, 'error').setTitle('찾을 수 없는 티켓 정보입니다')
+        .setColor('#2f3136');
     if (!ticket)
         yield interaction.editReply({ embeds: [ErrorEmbed] });
     let messages = new discord_js_1.Collection();
@@ -35,7 +36,8 @@ exports.default = new Command_1.ButtonInteraction({
     }));
     const LoadingEmbed = new Embed_1.default(client, 'info').setTitle('채팅 기록을 불러오는 중입니다')
         .setColor('#2f3136');
-    const NoMessageEmbed = new Embed_1.default(client, 'error').setTitle('채팅 기록을 불러오지 못했습니다');
+    const NoMessageEmbed = new Embed_1.default(client, 'error').setTitle('채팅 기록을 불러오지 못했습니다')
+        .setColor('#2f3136');
     if (!channelMessages)
         return interaction.editReply({ embeds: [NoMessageEmbed] });
     messages = messages.concat(channelMessages);

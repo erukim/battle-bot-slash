@@ -21,14 +21,16 @@ exports.default = new Command_1.ButtonInteraction({
     name: 'vote.select'
 }, (client, interaction) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
-    const ErrEmbed = new Embed_1.default(client, 'error');
+    const ErrEmbed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
     if (!interaction.guild) {
         ErrEmbed.setTitle('서버에서만 투표할 수 있어요!');
         return interaction.editReply({ embeds: [ErrEmbed] });
     }
     yield interaction.deferReply({ ephemeral: true });
     const vote_id = interaction.customId.split('_')[1];
-    const SuccessEmbed = new Embed_1.default(client, 'success');
+    const SuccessEmbed = new Embed_1.default(client, 'success')
+        .setColor('#2f3136');
     const VoteDB = yield VoteSchema_1.default.findOne({
         guild_id: (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.id,
         message_id: interaction.message.id

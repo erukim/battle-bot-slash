@@ -79,7 +79,7 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         var _a, _b, _c, _d, _e, _f;
         return __awaiter(this, void 0, void 0, function* () {
-            yield interaction.deferReply();
+            yield interaction.deferReply({ ephemeral: true });
             let member = interaction.member;
             member = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.members.cache.get(member.id);
             if (!member.permissions.has('MANAGE_CHANNELS'))

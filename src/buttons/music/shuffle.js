@@ -22,7 +22,8 @@ exports.default = new Command_1.ButtonInteraction({
 }, (client, interaction) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b;
     yield interaction.deferReply({ ephemeral: true });
-    const errembed = new Embed_1.default(client, 'error');
+    const errembed = new Embed_1.default(client, 'error')
+        .setColor('#2f3136');
     if (!interaction.guild) {
         errembed.setTitle('❌ 이 버튼은 서버에서만 사용이 가능해요!');
         return interaction.editReply({ embeds: [errembed] });
@@ -47,7 +48,8 @@ exports.default = new Command_1.ButtonInteraction({
     const musicDB = (yield musicSchema_1.default.findOne({
         guild_id: guildQueue.guild.id
     }));
-    const sucessembed = new Embed_1.default(client, 'info');
+    const sucessembed = new Embed_1.default(client, 'info')
+        .setColor('#2f3136');
     yield guildQueue.shuffle();
     (0, onReady_1.MusicTrackEvent)(client, guildQueue, musicDB);
     sucessembed.setDescription(`**${(0, builders_1.userMention)(interaction.user.id)}님의 요청으로 노래를 섞었어요!**`);

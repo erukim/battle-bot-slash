@@ -38,7 +38,8 @@ exports.default = new Command_1.ButtonInteraction({
         const captchaEmbed = new Embed_1.default(client, 'info')
             .setTitle('인증')
             .setDescription('아래코드를 입력해주세요 제한시간: 30초')
-            .setImage('attachment://captcha.png');
+            .setImage('attachment://captcha.png')
+            .setColor('#2f3136');
         yield interaction.editReply({
             embeds: [captchaEmbed],
             files: [{ name: 'captcha.png', attachment: captcha.buffer }]
@@ -58,7 +59,8 @@ exports.default = new Command_1.ButtonInteraction({
             if (answer === captcha.text) {
                 const captchaSuccess = new Embed_1.default(client, 'success')
                     .setTitle('인증')
-                    .setDescription('인증을 성공했습니다');
+                    .setDescription('인증을 성공했습니다')
+                    .setColor('#2f3136');
                 const member = interaction.member;
                 try {
                     yield member.roles.remove(VerifySettingDB.del_role_id);
@@ -72,7 +74,8 @@ exports.default = new Command_1.ButtonInteraction({
                 catch (e) {
                     const captchaError = new Embed_1.default(client, 'error')
                         .setTitle('인증')
-                        .setDescription('인증완료 역할 지급중 오류가 발생했습니다');
+                        .setDescription('인증완료 역할 지급중 오류가 발생했습니다')
+                        .setColor('#2f3136');
                     if (e)
                         return interaction.editReply({ embeds: [captchaError] });
                 }
@@ -81,13 +84,15 @@ exports.default = new Command_1.ButtonInteraction({
             else {
                 const captchaDeny = new Embed_1.default(client, 'error')
                     .setTitle('인증')
-                    .setDescription('인증을 실패했습니다 다시 시도해주세요');
+                    .setDescription('인증을 실패했습니다 다시 시도해주세요')
+                    .setColor('#2f3136');
                 return interaction.editReply({ embeds: [captchaDeny] });
             }
         })).catch(() => {
             const captchaTimeout = new Embed_1.default(client, 'error')
                 .setTitle('인증')
-                .setDescription('인증시간이 초과되었습니다 다시 시도해주세요');
+                .setDescription('인증시간이 초과되었습니다 다시 시도해주세요')
+                .setColor('#2f3136');
             return interaction.editReply({ embeds: [captchaTimeout] });
         }));
     }
@@ -108,8 +113,10 @@ exports.default = new Command_1.ButtonInteraction({
         });
         const captchaVerify = new Embed_1.default(client, 'success')
             .setTitle('인증')
-            .setDescription(`[여기](${(_d = config_1.default.web) === null || _d === void 0 ? void 0 : _d.baseurl}/verify?token=${token})로 접속하여 인증을 진행해주세요`);
-        const captchaGuildEmbed = new Embed_1.default(client, 'info');
+            .setDescription(`[여기](${(_d = config_1.default.web) === null || _d === void 0 ? void 0 : _d.baseurl}/verify?token=${token})로 접속하여 인증을 진행해주세요`)
+            .setColor('#2f3136');
+        const captchaGuildEmbed = new Embed_1.default(client, 'info')
+            .setColor('#2f3136');
         captchaGuildEmbed.setThumbnail((0, convert_1.guildProfileLink)(interaction.guild));
         captchaGuildEmbed.setTitle(`${(_e = interaction.guild) === null || _e === void 0 ? void 0 : _e.name} 서버 인증`);
         captchaGuildEmbed.setDescription(`${(_f = interaction.guild) === null || _f === void 0 ? void 0 : _f.name}서버에서 ${interaction.user.username}님에게 인증을 요청합니다`);
@@ -132,7 +139,8 @@ exports.default = new Command_1.ButtonInteraction({
         const code = Math.random().toString(36).substr(2, 7);
         const captchaEmail = new Embed_1.default(client, 'success')
             .setTitle('인증')
-            .setDescription('인증을 진행하실 이메일 주소를 30초 내로 입력해주세요!');
+            .setDescription('인증을 진행하실 이메일 주소를 30초 내로 입력해주세요!')
+            .setColor('#2f3136');
         yield interaction.editReply({ embeds: [captchaEmail] });
         const filter = (m) => {
             return m.author.id == interaction.user.id;
@@ -155,7 +163,8 @@ exports.default = new Command_1.ButtonInteraction({
                 });
                 const captchaEmailSended = new Embed_1.default(client, 'success')
                     .setTitle('인증')
-                    .setDescription('이메일로 인증번호가 발송되었습니다! 2분 내로 인증번호를 입력해주세요');
+                    .setDescription('이메일로 인증번호가 발송되었습니다! 2분 내로 인증번호를 입력해주세요')
+                    .setColor('#2f3136');
                 yield interaction.editReply({ embeds: [captchaEmailSended] });
                 yield ((_o = interaction.channel) === null || _o === void 0 ? void 0 : _o.awaitMessages({
                     filter: filter,
@@ -169,7 +178,8 @@ exports.default = new Command_1.ButtonInteraction({
                     if (answer2 === code) {
                         const captchaSuccess = new Embed_1.default(client, 'success')
                             .setTitle('인증')
-                            .setDescription('인증을 성공했습니다');
+                            .setDescription('인증을 성공했습니다')
+                            .setColor('#2f3136');
                         const member = interaction.member;
                         try {
                             yield member.roles.remove(VerifySettingDB.del_role_id);
@@ -183,7 +193,8 @@ exports.default = new Command_1.ButtonInteraction({
                         catch (e) {
                             const captchaError = new Embed_1.default(client, 'error')
                                 .setTitle('인증')
-                                .setDescription('인증완료 역할 지급중 오류가 발생했습니다');
+                                .setDescription('인증완료 역할 지급중 오류가 발생했습니다')
+                                .setColor('#2f3136');
                             if (e)
                                 return interaction.editReply({ embeds: [captchaError] });
                         }
@@ -192,26 +203,30 @@ exports.default = new Command_1.ButtonInteraction({
                     else {
                         const captchaDeny = new Embed_1.default(client, 'error')
                             .setTitle('인증')
-                            .setDescription('인증을 실패했습니다 다시 시도해주세요');
+                            .setDescription('인증을 실패했습니다 다시 시도해주세요')
+                            .setColor('#2f3136');
                         return interaction.editReply({ embeds: [captchaDeny] });
                     }
                 })).catch(() => {
                     const captchaTimeout = new Embed_1.default(client, 'error')
                         .setTitle('인증')
-                        .setDescription('인증시간이 초과되었습니다 다시 시도해주세요');
+                        .setDescription('인증시간이 초과되었습니다 다시 시도해주세요')
+                        .setColor('#2f3136');
                     return interaction.editReply({ embeds: [captchaTimeout] });
                 }));
             }
             else {
                 const captchaTimeout = new Embed_1.default(client, 'error')
                     .setTitle('인증')
-                    .setDescription('올바른 이메일 형식이 아닙니다 다시 시도해주세요');
+                    .setDescription('올바른 이메일 형식이 아닙니다 다시 시도해주세요')
+                    .setColor('#2f3136');
                 return interaction.editReply({ embeds: [captchaTimeout] });
             }
         })).catch(() => {
             const captchaTimeout = new Embed_1.default(client, 'error')
                 .setTitle('인증')
-                .setDescription('메일 입력시간이 초과되었습니다 다시 시도해주세요');
+                .setDescription('메일 입력시간이 초과되었습니다 다시 시도해주세요')
+                .setColor('#2f3136');
             return interaction.editReply({ embeds: [captchaTimeout] });
         }));
     }
@@ -224,7 +239,8 @@ exports.default = new Command_1.ButtonInteraction({
         if (!UserDB || !UserDB.kakao_name) {
             const Verify = new Embed_1.default(client, 'warn')
                 .setTitle('인증')
-                .setDescription(`인증을 진행하기 위해 [여기](${(_j = config_1.default.web) === null || _j === void 0 ? void 0 : _j.baseurl}/me)에서 카카오 아이디 연동을 진행해 주세요 \n 연동 후 다시 인증 버튼을 눌러주세요`);
+                .setDescription(`인증을 진행하기 위해 [여기](${(_j = config_1.default.web) === null || _j === void 0 ? void 0 : _j.baseurl}/me)에서 카카오 아이디 연동을 진행해 주세요 \n 연동 후 다시 인증 버튼을 눌러주세요`)
+                .setColor('#2f3136');
             return interaction.editReply({ embeds: [Verify] });
         }
         const member = interaction.member;
@@ -240,13 +256,15 @@ exports.default = new Command_1.ButtonInteraction({
         catch (e) {
             const captchaError = new Embed_1.default(client, 'error')
                 .setTitle('인증')
-                .setDescription('인증완료 역할 지급중 오류가 발생했습니다');
+                .setDescription('인증완료 역할 지급중 오류가 발생했습니다')
+                .setColor('#2f3136');
             if (e)
                 return interaction.editReply({ embeds: [captchaError] });
         }
         const VerifySuccess = new Embed_1.default(client, 'success')
             .setTitle('인증')
-            .setDescription(`${UserDB.kakao_name}(\`${UserDB.kakao_email}\`) 정보로 인증이 완료되었습니다`);
+            .setDescription(`${UserDB.kakao_name}(\`${UserDB.kakao_email}\`) 정보로 인증이 완료되었습니다`)
+            .setColor('#2f3136');
         return interaction.editReply({ embeds: [VerifySuccess] });
     }
 }));

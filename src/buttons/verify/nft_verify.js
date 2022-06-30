@@ -38,6 +38,7 @@ exports.default = new Command_1.ButtonInteraction({
     });
     const captchaVerify = new Embed_1.default(client, 'success')
         .setTitle('NFT 인증')
-        .setDescription(`[여기](${(_b = config_1.default.web) === null || _b === void 0 ? void 0 : _b.baseurl}/walletverify?token=${token})로 접속하여 인증을 진행해주세요`);
+        .setDescription(`[여기](${(_b = config_1.default.web) === null || _b === void 0 ? void 0 : _b.baseurl}/walletverify?token=${token})로 접속하여 인증을 진행해주세요`)
+        .setColor('#2f3136');
     return yield interaction.editReply({ embeds: [captchaVerify] });
 }));

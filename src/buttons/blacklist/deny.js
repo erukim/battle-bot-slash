@@ -31,12 +31,14 @@ exports.default = new Command_1.ButtonInteraction({
         return interaction.editReply({
             embeds: [
                 new Embed_1.default(client, 'warn').setDescription('이미 처리가 완료된 블랙리스트입니다')
+                    .setColor('#2f3136')
             ]
         });
     yield blacklistSchemas_1.default.updateOne({ message: interaction.message.id }, { $set: { status: 'deny' } });
     return interaction.editReply({
         embeds: [
             new Embed_1.default(client, 'success').setDescription('성공적으로 거절이 완료되었습니다')
+                .setColor('#2f3136')
         ]
     });
 }));
