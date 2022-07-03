@@ -131,7 +131,7 @@ exports.default = new Command_1.BaseCommand({
                     .setTitle(`급식`)
                     .setDescription(`잠시만 기다려주세요. 학교를 찾는중이에요...`)
                     .setColor('#2f3136');
-                let msg = yield interaction.reply({ embeds: [embed] });
+                let msg = yield interaction.reply({ embeds: [embed], ephemeral: true });
                 yield axios_1.default.get(`https://asia-northeast3-smeals-school.cloudfunctions.net/meals/schools?name=${encodeURI(school)}`)
                     .then((d) => __awaiter(this, void 0, void 0, function* () {
                     var _a;
