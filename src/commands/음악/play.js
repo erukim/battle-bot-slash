@@ -25,15 +25,16 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a, _b, _c;
     let errembed = new Embed_1.default(client, 'error')
+        .setTitle(`❌ 에러 발생`)
         .setColor('#2f3136');
     let sucessembed = new Embed_1.default(client, 'success')
         .setColor('#2f3136');
     if (!message.guild) {
-        errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
+        errembed.setDescription('이 명령어는 서버에서만 사용이 가능합니다.');
         return message.reply({ embeds: [errembed] });
     }
     if (!args[0]) {
-        errembed.setTitle('❌ 노래 제목을 적어주세요');
+        errembed.setDescription('노래 제목을 적어주세요.');
         return message.reply({ embeds: [errembed] });
     }
     let song = args.slice(1).join(' ');
@@ -42,27 +43,27 @@ exports.default = new Command_1.BaseCommand({
     const user = (_a = message.guild) === null || _a === void 0 ? void 0 : _a.members.cache.get(message.author.id);
     const channel = user === null || user === void 0 ? void 0 : user.voice.channel;
     if (!channel) {
-        errembed.setTitle('❌ 음성 채널에 먼저 입장해주세요!');
+        errembed.setDescription('음성 채널에 먼저 입장 해주세요!');
         return message.reply({ embeds: [errembed] });
     }
     const guildQueue = client.player.getQueue(message.guild.id);
     if (guildQueue && ((_b = message.guild.me) === null || _b === void 0 ? void 0 : _b.voice.channelId)) {
         if (channel.id !== ((_c = message.guild.me) === null || _c === void 0 ? void 0 : _c.voice.channelId)) {
-            errembed.setTitle('❌ 이미 다른 음성 채널에서 재생 중입니다!');
+            errembed.setDescription('이미 다른 음성 채널에서 재생 중입니다.');
             return message.reply({ embeds: [errembed] });
         }
     }
     else {
         if (!channel.viewable) {
-            errembed.setTitle('`채널보기` 권한이 필요해요!');
+            errembed.setDescription('`채널보기` 권한이 필요합니다.');
             return message.reply({ embeds: [errembed] });
         }
         if (!channel.joinable) {
-            errembed.setTitle('`채널입장` 권한이 필요해요!');
+            errembed.setDescription('`채널입장` 권한이 필요합니다.');
             return message.reply({ embeds: [errembed] });
         }
         if (channel.full) {
-            errembed.setTitle('채널이 가득 차 입장할 수 없어요!');
+            errembed.setDescription('채널이 가득 차 입장할 수 없습니다.');
             return message.reply({ embeds: [errembed] });
         }
     }
@@ -70,7 +71,7 @@ exports.default = new Command_1.BaseCommand({
         .search(song, { requestedBy: message.author })
         .catch((e) => { }));
     if (!result || !result.tracks.length) {
-        errembed.setTitle(`❌ ${song}를 찾지 못했어요!`);
+        errembed.setDescription(`${song}를 찾지 못했어요!`);
         return message.reply({ embeds: [errembed] });
     }
     let queue;
@@ -89,7 +90,7 @@ exports.default = new Command_1.BaseCommand({
     }
     catch (e) {
         client.player.deleteQueue(message.guild.id);
-        errembed.setTitle(`❌ 음성 채널에 입장할 수 없어요 ${e}`);
+        errembed.setDescription(`음성 채널에 입장할 수 없습니다. ${e}`);
         return message.reply({ embeds: [errembed] });
     }
     if (result.playlist) {
@@ -109,7 +110,7 @@ exports.default = new Command_1.BaseCommand({
         let row = new discord_js_1.MessageActionRow();
         let select = new discord_js_1.MessageSelectMenu()
             .setCustomId('music.select')
-            .setPlaceholder('재생할 노래를 선택해주세요!');
+            .setPlaceholder('재생할 노래를 선택 해주세요!');
         let trackslist = 15;
         if (result.tracks.length < 15)
             trackslist = result.tracks.length;
@@ -162,38 +163,39 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
             let errembed = new Embed_1.default(client, 'error')
+                .setTitle(`❌ 에러 발생`)
                 .setColor('#2f3136');
             let sucessembed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             if (!interaction.guild) {
-                errembed.setTitle('❌ 이 명령어는 서버에서만 사용이 가능해요!');
+                errembed.setDescription('이 명령어는 서버에서만 사용이 가능합니다.');
                 return interaction.editReply({ embeds: [errembed] });
             }
             const song = interaction.options.getString('song', true);
             const user = (_a = interaction.guild) === null || _a === void 0 ? void 0 : _a.members.cache.get(interaction.user.id);
             const channel = user === null || user === void 0 ? void 0 : user.voice.channel;
             if (!channel) {
-                errembed.setTitle('❌ 음성 채널에 먼저 입장해주세요!');
+                errembed.setDescription('음성 채널에 먼저 입장 해주세요!');
                 return interaction.editReply({ embeds: [errembed] });
             }
             const guildQueue = client.player.getQueue(interaction.guild.id);
             if (guildQueue) {
                 if (channel.id !== ((_b = interaction.guild.me) === null || _b === void 0 ? void 0 : _b.voice.channelId)) {
-                    errembed.setTitle('❌ 이미 다른 음성 채널에서 재생 중입니다!');
+                    errembed.setDescription('이미 다른 음성 채널에서 재생 중입니다.');
                     return interaction.editReply({ embeds: [errembed] });
                 }
             }
             else {
                 if (!channel.viewable) {
-                    errembed.setTitle('`채널보기` 권한이 필요해요!');
+                    errembed.setDescription('`채널보기` 권한이 필요합니다.');
                     return interaction.editReply({ embeds: [errembed] });
                 }
                 if (!channel.joinable) {
-                    errembed.setTitle('`채널입장` 권한이 필요해요!');
+                    errembed.setDescription('`채널입장` 권한이 필요합니다.');
                     return interaction.editReply({ embeds: [errembed] });
                 }
                 if (channel.full) {
-                    errembed.setTitle('채널이 가득 차 입장할 수 없어요!');
+                    errembed.setDescription('채널이 가득 차 입장할 수 없습니다.');
                     return interaction.editReply({ embeds: [errembed] });
                 }
             }
@@ -201,7 +203,7 @@ exports.default = new Command_1.BaseCommand({
                 .search(song, { requestedBy: interaction.user })
                 .catch((e) => { }));
             if (!result || !result.tracks.length) {
-                errembed.setTitle(`❌ ${song}을 찾지 못했어요!`);
+                errembed.setDescription(`${song}을/를 찾지 못했습니다.`);
                 return interaction.editReply({ embeds: [errembed] });
             }
             let queue;
@@ -220,7 +222,7 @@ exports.default = new Command_1.BaseCommand({
             }
             catch (e) {
                 client.player.deleteQueue(interaction.guild.id);
-                errembed.setTitle(`❌ 음성 채널에 입장할 수 없어요 ${e}`);
+                errembed.setDescription(`음성 채널에 입장할 수 없습니다. ${e}`);
                 return interaction.editReply({ embeds: [errembed] });
             }
             if (result.playlist) {
@@ -252,7 +254,7 @@ exports.default = new Command_1.BaseCommand({
                             ? `\n... + ${result.playlist.tracks.length - pageEnd}`
                             : ''}`);
                         embed.setThumbnail(result.playlist.thumbnail);
-                        embed.setAuthor(`재생목록에 아래 노래들을 추가했어요!`, undefined, `${result.playlist.url}`);
+                        embed.setAuthor(`재생목록에 아래 노래들을 추가했습니다.`, undefined, `${result.playlist.url}`);
                         pages.push(embed);
                         page++;
                     }
@@ -261,9 +263,9 @@ exports.default = new Command_1.BaseCommand({
                         if (page === 1) {
                             const embed = new Embed_1.default(client, 'success');
                             embed.setColor('#2f3136');
-                            embed.setDescription(`더 이상 재생목록에 노래가 없습니다`);
+                            embed.setDescription(`더 이상 재생목록에 노래가 없습니다.`);
                             embed.setThumbnail(result.playlist.thumbnail);
-                            embed.setAuthor(`재생목록에 아래 노래들을 추가했어요!`, undefined, `${result.playlist.url}`);
+                            embed.setAuthor(`재생목록에 아래 노래들을 추가했습니다.`, undefined, `${result.playlist.url}`);
                             return interaction.editReply({ embeds: [embed] });
                         }
                         if (page === 2) {
@@ -280,7 +282,7 @@ exports.default = new Command_1.BaseCommand({
                 let row = new discord_js_1.MessageActionRow();
                 let select = new discord_js_1.MessageSelectMenu()
                     .setCustomId('music.select')
-                    .setPlaceholder('재생할 노래를 선택해주세요!');
+                    .setPlaceholder('재생할 노래를 선택 해주세요!');
                 let trackslist = 15;
                 if (result.tracks.length < 15)
                     trackslist = result.tracks.length;
@@ -308,7 +310,7 @@ exports.default = new Command_1.BaseCommand({
                             // @ts-ignore
                             let index = Number(i.values[0]);
                             queue.addTrack(result.tracks[index]);
-                            sucessembed.setAuthor(`재생목록에 노래를 추가했어요!`, undefined, result.tracks[index].url);
+                            sucessembed.setAuthor(`재생목록에 노래를 추가했습니다.`, undefined, result.tracks[index].url);
                             sucessembed.setDescription(`[${result.tracks[index].title}](${result.tracks[index].url}) ${result.tracks[index].duration} - ${result.tracks[index].requestedBy}`);
                             sucessembed.setThumbnail(result.tracks[index].thumbnail);
                             interaction.editReply({

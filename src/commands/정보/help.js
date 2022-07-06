@@ -35,7 +35,7 @@ exports.default = new Command_1.BaseCommand({
         client.categorys.forEach((category, command) => {
             if (command === 'dev')
                 return;
-            embed.setDescription(`아래에 있는 명령어들을 이용해 도움말을 보세요!`);
+            embed.setDescription(`아래에 있는 명령어들을 이용해 도움말을 보실 수 있습니다.`);
             embed.addField(`\`${config_1.default.bot.prefix}도움말 ${command}\``, `> ${command}관련 명령어들을 보내드려요!`, true);
         });
         return message.reply({ embeds: [embed], components: [row] });
@@ -46,7 +46,7 @@ exports.default = new Command_1.BaseCommand({
             // @ts-ignore
             if (!client.dokdo.owners.includes(message.author.id)) {
                 embed
-                    .setTitle('이런...')
+                    .setTitle(`❌ 에러 발생`)
                     .setDescription(`존재하지 않는 카테고리입니다.`)
                     .setType('error');
                 return message.reply({ embeds: [embed], components: [row] });
@@ -54,7 +54,7 @@ exports.default = new Command_1.BaseCommand({
         }
         if (!commands) {
             embed
-                .setTitle('이런...')
+                .setTitle(`❌ 에러 발생`)
                 .setDescription(`존재하지 않는 카테고리입니다.`)
                 .setType('error');
             return message.reply({ embeds: [embed], components: [row] });
@@ -103,7 +103,7 @@ exports.default = new Command_1.BaseCommand({
                     // @ts-ignore
                     if (!client.dokdo.owners.includes(message.author.id)) {
                         embed
-                            .setTitle('이런...')
+                            .setTitle(`❌ 에러 발생`)
                             .setDescription(`존재하지 않는 카테고리입니다.`)
                             .setType('error');
                         return interaction.reply({ embeds: [embed], components: [row] });
@@ -112,7 +112,7 @@ exports.default = new Command_1.BaseCommand({
                 let commands = client.categorys.get(category);
                 if (!commands) {
                     embed
-                        .setTitle('이런...')
+                        .setTitle(`❌ 에러 발생`)
                         .setDescription(`존재하지 않는 카테고리입니다.`)
                         .setType('error');
                     return interaction.reply({ embeds: [embed], components: [row] });
@@ -120,7 +120,7 @@ exports.default = new Command_1.BaseCommand({
                 embed.setDescription(`${category} 관련 도움말 입니다!`);
                 let isSlash = commands === null || commands === void 0 ? void 0 : commands.filter((x) => x.isSlash);
                 if ((isSlash === null || isSlash === void 0 ? void 0 : isSlash.length) === 0) {
-                    embed.setTitle('이런...');
+                    embed.setTitle(`❌ 에러 발생`);
                     embed.setDescription(`${category} 카테고리에는 사용 가능한 (/) 명령어가 없어요`);
                 }
                 else {

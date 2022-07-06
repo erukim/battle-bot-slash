@@ -23,9 +23,8 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['게임']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     let embed = new Embed_1.default(client, 'error')
-        .setTitle(`게임`)
-        .setDescription('게임 명령어는 (/) 명령어로만 사용이 가능해요')
-        .setColor('#2f3136');
+        .setTitle(`❌ 에러 발생`)
+        .setDescription('게임 명령어는 (/) 명령어로만 사용이 가능합니다.');
     return message.reply({ embeds: [embed] });
 }), {
     // @ts-ignore
@@ -48,8 +47,7 @@ exports.default = new Command_1.BaseCommand({
     execute(client, interaction) {
         return __awaiter(this, void 0, void 0, function* () {
             const embed = new Embed_1.default(client, 'error')
-                .setTitle(`🎮 게임`)
-                .setColor('#2f3136');
+                .setTitle(`❌ 에러 발생`);
             const embedSuccess = new Embed_1.default(client, 'success')
                 .setTitle(`🎮 게임`)
                 .setColor('#2f3136');

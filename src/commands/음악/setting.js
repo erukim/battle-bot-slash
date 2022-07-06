@@ -27,14 +27,15 @@ exports.default = new Command_1.BaseCommand({
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     let errembed = new Embed_1.default(client, 'error')
+        .setTitle(`❌ 에러 발생`)
         .setColor('#2f3136');
     let musicEmbed = new MusicEmbed_1.default(client);
     if (!message.guild) {
-        errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
+        errembed.setDescription('이 명령어는 서버에서만 사용이 가능합니다.');
         return message.reply({ embeds: [errembed] });
     }
     if (!((_a = message.member) === null || _a === void 0 ? void 0 : _a.permissions.has("MANAGE_CHANNELS"))) {
-        errembed.setTitle('이 명령어를 사용할 권한이 없어요');
+        errembed.setDescription('이 명령어를 사용할 권한이 없습니다.');
         return message.reply({ embeds: [errembed] });
     }
     let db = yield musicSchema_1.default.findOne({ guild_id: message.guild.id });
@@ -49,15 +50,14 @@ exports.default = new Command_1.BaseCommand({
         musicdb.message_id = msg.id;
         musicdb.save((err) => {
             if (err) {
-                errembed.setTitle('뮤직기능 설정중 오류가 발생했어요!');
+                errembed.setDescription('뮤직기능 설정중 오류가 발생했습니다.');
                 return message.reply({ embeds: [errembed] });
             }
         });
-        return message.reply(`${(0, builders_1.channelMention)(musicChannel.id)} 노래기능 설정이 완료되었어요!`);
+        return message.reply(`${(0, builders_1.channelMention)(musicChannel.id)} 노래기능 설정이 완료되었습니다.`);
     }
     else {
-        errembed.setTitle('이런...!');
-        errembed.setDescription(`이미 ${(0, builders_1.channelMention)(db.channel_id)}로 음악기능이 설정되있는거 같아요! \n 채널을 삭제하셨거나 다시 설정을 원하시면 \`${config_1.default.bot.prefix}뮤직설정헤제\` 입력 후 다시 시도해주세요!`);
+        errembed.setDescription(`이미 ${(0, builders_1.channelMention)(db.channel_id)}로 음악기능이 설정되있는거 같습니다. \n 채널을 삭제하셨거나 다시 설정을 원하시면 \`${config_1.default.bot.prefix}뮤직설정헤제\` 입력 후 다시 시도해주세요.`);
         return message.reply({ embeds: [errembed] });
     }
 }), {
@@ -72,17 +72,18 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
             let errembed = new Embed_1.default(client, 'error')
+                .setTitle(`❌ 에러 발생`)
                 .setColor('#2f3136');
             let musicEmbed = new MusicEmbed_1.default(client);
             if (!interaction.guild) {
-                errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
+                errembed.setDescription('이 명령어는 서버에서만 사용이 가능합니다.');
                 return interaction.editReply({ embeds: [errembed] });
             }
             let member = interaction.guild.members.cache.get(interaction.user.id);
             if (!member)
                 member = (yield interaction.guild.members.fetch(interaction.user.id));
             if (!member.permissions.has("MANAGE_CHANNELS")) {
-                errembed.setTitle('이 명령어를 사용할 권한이 없어요');
+                errembed.setDescription('이 명령어를 사용할 권한이 없습니다.');
                 return interaction.editReply({ embeds: [errembed] });
             }
             let db = yield musicSchema_1.default.findOne({ guild_id: interaction.guild.id });
@@ -97,15 +98,14 @@ exports.default = new Command_1.BaseCommand({
                 musicdb.message_id = msg.id;
                 musicdb.save((err) => {
                     if (err) {
-                        errembed.setTitle('뮤직기능 설정중 오류가 발생했어요!');
+                        errembed.setDescription('뮤직기능 설정중 오류가 발생했습니다.');
                         return interaction.editReply({ embeds: [errembed] });
                     }
                 });
-                return interaction.editReply(`${(0, builders_1.channelMention)(musicChannel.id)} 노래기능 설정이 완료되었어요!`);
+                return interaction.editReply(`${(0, builders_1.channelMention)(musicChannel.id)} 노래기능 설정이 완료되었습니다.`);
             }
             else {
-                errembed.setTitle('이런...!');
-                errembed.setDescription(`이미 ${(0, builders_1.channelMention)(db.channel_id)}로 음악기능이 설정되있는거 같아요! \n 채널을 삭제하셨거나 다시 설정을 원하시면 \`${config_1.default.bot.prefix}뮤직설정헤제\` 입력 후 다시 시도해주세요!`);
+                errembed.setDescription(`이미 ${(0, builders_1.channelMention)(db.channel_id)}로 음악기능이 설정되있는거 같습니다. \n 채널을 삭제하셨거나 다시 설정을 원하시면 \`${config_1.default.bot.prefix}뮤직설정헤제\` 입력 후 다시 시도해주세요.`);
                 return interaction.editReply({ embeds: [errembed] });
             }
         });

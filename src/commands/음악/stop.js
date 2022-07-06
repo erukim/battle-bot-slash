@@ -21,16 +21,17 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['정지', 'musicstop']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     let errembed = new Embed_1.default(client, 'error')
+        .setTitle(`❌ 에러 발생`)
         .setColor('#2f3136');
     let sucessembed = new Embed_1.default(client, 'success')
         .setColor('#2f3136');
     if (!message.guild) {
-        errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
+        errembed.setDescription('이 명령어는 서버에서만 사용이 가능합니다.');
         return message.reply({ embeds: [errembed] });
     }
     const queue = client.player.getQueue(message.guild.id);
     if (!queue || !queue.playing) {
-        errembed.setTitle('노래가 재생 중이지 않아요!');
+        errembed.setDescription('노래가 재생 중이지 않습니다.');
         return message.reply({ embeds: [errembed] });
     }
     queue.stop();
@@ -49,21 +50,22 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
             let errembed = new Embed_1.default(client, 'error')
+                .setTitle(`❌ 에러 발생`)
                 .setColor('#2f3136');
             let sucessembed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             if (!interaction.guild) {
-                errembed.setTitle('이 명령어는 서버에서만 사용이 가능해요!');
+                errembed.setDescription('이 명령어는 서버에서만 사용이 가능합니다.');
                 return interaction.editReply({ embeds: [errembed] });
             }
             const queue = client.player.getQueue(interaction.guild.id);
             if (!queue || !queue.playing) {
-                errembed.setTitle('노래가 재생 중이지 않아요!');
+                errembed.setDescription('노래가 재생 중이지 않습니다.');
                 return interaction.editReply({ embeds: [errembed] });
             }
             queue.stop();
             queue.destroy();
-            sucessembed.setDescription(`${(0, builders_1.userMention)(interaction.user.id)}님의 요청으로 노래 재생이 정지되었어요!`);
+            sucessembed.setDescription(`${(0, builders_1.userMention)(interaction.user.id)}님의 요청으로 노래 재생이 정지되었습니다.`);
             return interaction.editReply({ embeds: [sucessembed] });
         });
     }

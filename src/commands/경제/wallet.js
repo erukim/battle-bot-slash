@@ -21,7 +21,8 @@ exports.default = new Command_1.BaseCommand({
     description: '자신의 돈을 확인합니다.',
     aliases: ['잔액', 'money', 'ehs', 'wlrkq', '지갑', '돈']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
-    let embed = new Embed_1.default(client, 'warn').setTitle('처리중..')
+    let embed = new Embed_1.default(client, 'warn')
+        .setTitle('처리중..')
         .setColor('#2f3136');
     let m = yield message.reply({
         embeds: [embed]
@@ -41,7 +42,8 @@ exports.default = new Command_1.BaseCommand({
         i = "돈을 받음";
     else
         i = "돈을 받지않음";
-    embed = new Embed_1.default(client, 'success').setTitle(`${user.tag}님의 잔액`)
+    embed = new Embed_1.default(client, 'success')
+        .setTitle(`${user.tag}님의 잔액`)
         .setDescription(`유저님의 잔액은 아래와 같습니다.`)
         .addField("잔액 :", `**${(0, comma_number_1.default)(wjdqh.money)}원**`)
         .setColor('#2f3136');

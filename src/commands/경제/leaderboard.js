@@ -35,6 +35,7 @@ exports.default = new Command_1.BaseCommand({
             if (!searchuser)
                 return;
             embed.addField(`${i + 1}. ${searchuser.username}`, `${(0, comma_number_1.default)(data[i].money)}원`);
+            embed.setColor('#2f3136');
         }
         else if (type === '서버') {
             embed.setTitle('서버 돈 순위표');
@@ -42,6 +43,7 @@ exports.default = new Command_1.BaseCommand({
             if (!searchuser)
                 return;
             embed.addField(`${i + 1}. ${(_b = searchuser.nickname) !== null && _b !== void 0 ? _b : searchuser.user.username}`, `${(0, comma_number_1.default)(data[i].money)}원`);
+            embed.setColor('#2f3136');
         }
         else {
             embed.setTitle('돈 순위표');
@@ -49,6 +51,7 @@ exports.default = new Command_1.BaseCommand({
             if (!searchuser)
                 return;
             embed.addField(`${i + 1}. ${searchuser.username}`, `${(0, comma_number_1.default)(data[i].money)}원`);
+            embed.setColor('#2f3136');
         }
     }
     message.reply({

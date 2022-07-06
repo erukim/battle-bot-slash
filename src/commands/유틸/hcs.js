@@ -61,6 +61,7 @@ exports.default = new Command_1.BaseCommand({
             let successEmbed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');
             let errEmbed = new Embed_1.default(client, 'error')
+                .setTitle(`❌ 에러 발생`)
                 .setColor('#2f3136');
             let infoEmbed = new Embed_1.default(client, 'info')
                 .setColor('#2f3136');

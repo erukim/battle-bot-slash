@@ -46,6 +46,7 @@ exports.default = new Command_1.BaseCommand({
             let user = interaction.options.getUser('유저', false);
             const isPremium = yield (0, checkPremium_1.checkUserPremium)(client, interaction.user);
             if (!interaction.guild) {
+                errEmbed.setTitle(`❌ 에러 발생`);
                 errEmbed.setDescription('이 명령어는 서버에서만 사용 가능합니다');
                 return interaction.editReply({ embeds: [errEmbed] });
             }

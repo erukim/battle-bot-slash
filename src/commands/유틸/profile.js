@@ -25,7 +25,7 @@ exports.default = new Command_1.BaseCommand({
     var _a, _b;
     if (!message.guild) {
         let embed = new Embed_1.default(client, 'error');
-        embed.setTitle('이런...');
+        embed.setTitle(`❌ 에러 발생`);
         embed.setDescription('이 명령어는 서버에서만 사용 가능합니다');
         embed.setColor('#2f3136');
         return message.reply({ embeds: [embed] });
@@ -37,7 +37,7 @@ exports.default = new Command_1.BaseCommand({
         user = message.guild.members.cache.get((_a = message.mentions.users.first()) === null || _a === void 0 ? void 0 : _a.id);
     if (!user) {
         let embed = new Embed_1.default(client, 'error');
-        embed.setTitle('이런...');
+        embed.setTitle(`❌ 에러 발생`);
         embed.setDescription('찾을 수 없는 유저입니다');
         embed.setColor('#2f3136');
         return message.reply({ embeds: [embed] });
@@ -71,16 +71,18 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             if (!interaction.guild) {
                 let embed = new Embed_1.default(client, 'error');
-                embed.setTitle('이런...');
+                embed.setTitle('❌ 에러 발생');
                 embed.setDescription('이 명령어는 서버에서만 사용 가능합니다');
+                embed.setColor('#2f3136');
                 return interaction.reply({ embeds: [embed], ephemeral: true });
             }
             let seluser = interaction.options.getUser('user');
             let user = interaction.guild.members.cache.get(seluser === null || seluser === void 0 ? void 0 : seluser.id);
             if (!user) {
                 let embed = new Embed_1.default(client, 'error');
-                embed.setTitle('이런...');
+                embed.setTitle('❌ 에러 발생');
                 embed.setDescription('찾을 수 없는 유저입니다');
+                embed.setColor('#2f3136');
                 return interaction.reply({ embeds: [embed] });
             }
             let userdb = yield userSchema_1.default.findOne({ id: user.id });

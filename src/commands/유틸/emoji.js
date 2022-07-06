@@ -57,6 +57,7 @@ exports.default = new Command_1.BaseCommand({
         return __awaiter(this, void 0, void 0, function* () {
             yield interaction.deferReply({ ephemeral: true });
             let errEmbed = new Embed_1.default(client, 'error')
+                .setTitle(`❌ 에러 발생`)
                 .setColor('#2f3136');
             let successEmbed = new Embed_1.default(client, 'success')
                 .setColor('#2f3136');

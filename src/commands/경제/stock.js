@@ -26,16 +26,19 @@ exports.default = new Command_1.BaseCommand({
     aliases: ['주식', 'stock', '주식거래', '주식거래하기']
 }, (client, message, args) => __awaiter(void 0, void 0, void 0, function* () {
     const type = args[0];
-    const embed = new Embed_1.default(client, 'info').setTitle('주식').setColor('#2f3136');
+    const embed = new Embed_1.default(client, 'info')
+        .setColor('#2f3136');
     if (type === '검색') {
         const keyword = args.slice(1).join(' ');
         const results = yield (0, stock_1.searchStockList)(keyword);
         if (!results || (results === null || results === void 0 ? void 0 : results.items.length) == 0) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription('검색 결과가 없습니다.');
             return message.reply({ embeds: [embed] });
         }
         const result = yield (0, stock_1.searchStock)(results.items[0].code);
         if (!result) {
+            embed.setTitle(`❌ 에러발생`);
             embed.setDescription('검색 결과가 없습니다.');
             return message.reply({ embeds: [embed] });
         }
@@ -80,11 +83,13 @@ exports.default = new Command_1.BaseCommand({
         }
         const results = yield (0, stock_1.searchStockList)(keyword);
         if (!results || (results === null || results === void 0 ? void 0 : results.items.length) == 0) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${keyword} 검색 결과가 없습니다.`);
             return message.reply({ embeds: [embed] });
         }
         const result = yield (0, stock_1.searchStock)(results.items[0].code);
         if (!result) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${keyword} 검색 결과가 없습니다.`);
             return message.reply({ embeds: [embed] });
         }
@@ -93,10 +98,12 @@ exports.default = new Command_1.BaseCommand({
         const total = price + fee;
         const user = yield Money_1.default.findOne({ userid: message.author.id });
         if (!user) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`등록되어 있지 않은 유저인 거 같아요!, 먼저 \`${config_1.default.bot.prefix}돈받기\` 명령어로 등록을 해주세요.`);
             return message.reply({ embeds: [embed] });
         }
         if (user.money < total) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${(0, comma_number_1.default)(total - user.money)}원이 부족해요!\n잔액은 ${(0, comma_number_1.default)(user.money)}원이에요.`);
             return message.reply({ embeds: [embed] });
         }
@@ -120,6 +127,7 @@ exports.default = new Command_1.BaseCommand({
             if (i.user.id != message.author.id)
                 return;
             if (i.customId == 'stock.accept') {
+                embed.setTitle(`⭕ 매수 성공`);
                 embed.setDescription(`${results.items[0].name} ${quantity}주를 매수했어요!`);
                 embed.addField('현재가', `${(0, comma_number_1.default)(result.now)}원`, true);
                 embed.addField('수수료', `${(0, comma_number_1.default)(fee)}원 (2%)`, true);
@@ -163,14 +171,16 @@ exports.default = new Command_1.BaseCommand({
                     }, { upsert: true });
                 }
                 const successEmbed = new Embed_1.default(client, 'success')
-                    .setTitle(`주식`)
+                    .setTitle(`⭕ 매수 완료`)
                     .setDescription(`${results.items[0].name} ${quantity}주를 매수했어요!`)
                     .addField('거래금액', `${(0, comma_number_1.default)(total)}원`, true)
                     .addField('수수료', `${(0, comma_number_1.default)(fee)}원 (2%)`, true)
-                    .addField('거래후 잔액', `${(0, comma_number_1.default)(user.money - total)}원`, true);
+                    .addField('거래후 잔액', `${(0, comma_number_1.default)(user.money - total)}원`, true)
+                    .setColor('#2f3136');
                 return i.update({ embeds: [successEmbed], components: [] });
             }
             else if (i.customId == 'stock.deny') {
+                embed.setTitle(`❌ 매수 취소`);
                 embed.setDescription(`매수를 취소하였습니다.`);
                 return i.update({ embeds: [embed], components: [] });
             }
@@ -200,20 +210,24 @@ exports.default = new Command_1.BaseCommand({
         const keyword = args.slice(2).join(' ');
         const quantity = parseInt(args[1]);
         if (!quantity) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`매도하실 주식의 수량을 숫자만 입력해주세요.`);
             return message.reply({ embeds: [embed] });
         }
         if (quantity < 1) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`매도하실 주식의 수량을 1이상의 숫자만 입력해주세요.`);
             return message.reply({ embeds: [embed] });
         }
         const results = yield (0, stock_1.searchStockList)(keyword);
         if (!results || (results === null || results === void 0 ? void 0 : results.items.length) == 0) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${keyword} 검색 결과가 없습니다.`);
             return message.reply({ embeds: [embed] });
         }
         const result = yield (0, stock_1.searchStock)(results.items[0].code);
         if (!result) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${keyword} 검색 결과가 없습니다.`);
             return message.reply({ embeds: [embed] });
         }
@@ -222,10 +236,12 @@ exports.default = new Command_1.BaseCommand({
             'stocks.code': results.items[0].code
         });
         if (!stock || stock.stocks.length === 0) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${results.items[0].name}을 보유하고 있지 않습니다.`);
             return message.reply({ embeds: [embed] });
         }
         if (stock.stocks[0].quantity < quantity) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`${results.items[0].name}주식을 ${quantity}주만큼 보유하고 있지 않습니다. 현재 보유량: ${stock.stocks[0].quantity}주`);
             return message.reply({ embeds: [embed] });
         }
@@ -234,6 +250,7 @@ exports.default = new Command_1.BaseCommand({
         const total = price - fee;
         const user = yield Money_1.default.findOne({ userid: message.author.id });
         if (!user) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`등록되어 있지 않은 유저인 거 같아요!, 먼저 \`${config_1.default.bot.prefix}돈받기\` 명령어로 등록을 해주세요.`);
             return message.reply({ embeds: [embed] });
         }
@@ -257,6 +274,7 @@ exports.default = new Command_1.BaseCommand({
             if (i.user.id != message.author.id)
                 return;
             if (i.customId == 'stocksell.accept') {
+                embed.setTitle(`⭕ 매도 성공`);
                 embed.setDescription(`${results.items[0].name} ${quantity}주를 매도했어요!`);
                 embed.addField('현재가', `${(0, comma_number_1.default)(result.now)}원`, true);
                 embed.addField('수수료', `${(0, comma_number_1.default)(fee)}원 (2%)`, true);
@@ -280,14 +298,16 @@ exports.default = new Command_1.BaseCommand({
                     }
                 });
                 const successEmbed = new Embed_1.default(client, 'success')
-                    .setTitle(`주식`)
+                    .setTitle(`⭕ 매도 성공`)
                     .setDescription(`${results.items[0].name} ${quantity}주를 매도했어요!`)
                     .addField('거래금액', `${(0, comma_number_1.default)(total)}원`, true)
                     .addField('수수료', `${(0, comma_number_1.default)(fee)}원 (2%)`, true)
-                    .addField('거래후 잔액', `${(0, comma_number_1.default)(user.money + total)}원`, true);
+                    .addField('거래후 잔액', `${(0, comma_number_1.default)(user.money + total)}원`, true)
+                    .setColor('#2f3136');
                 return i.update({ embeds: [successEmbed], components: [] });
             }
             else if (i.customId == 'stocksell.deny') {
+                embed.setTitle(`❌ 매도 취소`);
                 embed.setDescription(`매도를 취소하였습니다.`);
                 return i.update({ embeds: [embed], components: [] });
             }
@@ -316,6 +336,7 @@ exports.default = new Command_1.BaseCommand({
     else if (args[0] == '보유') {
         const nowStock = yield Stock_1.default.findOne({ userid: message.author.id });
         if (!nowStock) {
+            embed.setTitle(`❌ 에러 발생`);
             embed.setDescription(`보유중인 주식이없습니다, 먼저 \`${config_1.default.bot.prefix}주식\` 명령어로 주식 명령어를 확인해보세요!`);
             return message.reply({
                 embeds: [embed]

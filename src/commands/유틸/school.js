@@ -27,7 +27,7 @@ exports.default = new Command_1.BaseCommand({
     if (!args[0]) {
         let embed = new Embed_1.default(client, 'error')
             .setColor('#2f3136')
-            .setTitle(`이런...`)
+            .setTitle(`❌ 에러 발생`)
             .setDescription(`학교 이름을 적어주세요 \n\n \`${config_1.default.bot.prefix}급식 <학교명>\``);
         return message.reply({ embeds: [embed] });
     }
@@ -81,7 +81,7 @@ exports.default = new Command_1.BaseCommand({
                             var _a;
                             if (((_a = e.response) === null || _a === void 0 ? void 0 : _a.status) === 404) {
                                 let mealembed = new Embed_1.default(client, 'warn')
-                                    .setTitle(`${value[2]} 급식`)
+                                    .setTitle(`❌ 에러 발생`)
                                     .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`)
                                     .setColor('#2f3136');
                                 yield i.reply({ embeds: [mealembed], components: [] });
@@ -97,7 +97,7 @@ exports.default = new Command_1.BaseCommand({
             var _b;
             if (((_b = e.response) === null || _b === void 0 ? void 0 : _b.status) === 404) {
                 let mealembed = new Embed_1.default(client, 'warn')
-                    .setTitle(`${args[0]} 급식`)
+                    .setTitle(`❌ 에러 발생`)
                     .setDescription(`어라... ${args[0]}을 찾을 수 없어요...`)
                     .setColor('#2f3136');
                 yield msg.edit({ embeds: [mealembed], components: [] });
@@ -121,7 +121,7 @@ exports.default = new Command_1.BaseCommand({
             let school = interaction.options.getString('school');
             if (!school) {
                 let embed = new Embed_1.default(client, 'error')
-                    .setTitle(`이런...`)
+                    .setTitle(`❌ 에러 발생`)
                     .setDescription(`학교 이름을 적어주세요 \n\n \`${config_1.default.bot.prefix}급식 <학교명>\``)
                     .setColor('#2f3136');
                 return interaction.reply({ embeds: [embed], ephemeral: true });
@@ -169,7 +169,7 @@ exports.default = new Command_1.BaseCommand({
                                     .then((data) => __awaiter(this, void 0, void 0, function* () {
                                     let meal = data.data;
                                     let mealembed = new Embed_1.default(client, 'success')
-                                        .setTitle(`${value[2]} 급식`)
+                                        .setTitle(`❌ 에러 발생`)
                                         .setDescription(`${meal.meals[0].meal.join('\n')} \n\n ${meal.meals[0].calories}`)
                                         .setColor('#2f3136');
                                     yield i.reply({ embeds: [mealembed] });
@@ -177,7 +177,7 @@ exports.default = new Command_1.BaseCommand({
                                     var _b;
                                     if (((_b = e.response) === null || _b === void 0 ? void 0 : _b.status) === 404) {
                                         let mealembed = new Embed_1.default(client, 'warn')
-                                            .setTitle(`${value[2]} 급식`)
+                                            .setTitle(`❌ 에러 발생`)
                                             .setDescription(`어라... ${value[2]}의 급식을 찾을 수 없어요...`)
                                             .setColor('#2f3136');
                                         yield i.reply({ embeds: [mealembed], components: [] });
@@ -193,7 +193,7 @@ exports.default = new Command_1.BaseCommand({
                     var _c;
                     if (((_c = e.response) === null || _c === void 0 ? void 0 : _c.status) === 404) {
                         let mealembed = new Embed_1.default(client, 'warn')
-                            .setTitle(`${school} 급식`)
+                            .setTitle(`❌ 에러 발생`)
                             .setDescription(`어라... ${school}을 찾을 수 없어요...`)
                             .setColor('#2f3136');
                         return yield interaction.editReply({ embeds: [mealembed], components: [] });
