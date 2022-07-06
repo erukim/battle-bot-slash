@@ -45,12 +45,12 @@ export default new BaseCommand(
     data: new SlashCommandBuilder()
       .setName('돈')
       .setDescription('자신의 돈을 확인합니다.')
-      .addUserOption((user) =>
-        user
-          .setName('user')
-          .setDescription('유저를 적어주세요')
-          .setRequired(true)
-      ),
+      .addUserOption(option =>
+      option
+        .setName("유저")
+        .setDescription("확인할 유저를 입력해주세요")
+        .setRequired(false)
+    ),
     options: {
       name: '돈',
       isSlash: true
@@ -63,29 +63,45 @@ export default new BaseCommand(
     let m = await interaction.editReply({
       embeds: [embed]
     })
-    let user = interaction.options.getUser('user')
-    if (!user) user = interaction.author
-    const wjdqh = await Schema.findOne({ userid: user.id })
+      let user = interaction.options.getUser('유저', false)
+      if (!user) {
+        let user = interaction.user.id
+        const wjdqh = await Schema.findOne({ userid: interaction.user.id })
+        const t = new Date()
+        const date = "" + t.getFullYear() + t.getMonth() + t.getDate();
+        let i
+        if (wjdqh.date == date) i = "돈을 받음"
+        else i = "돈을 받지않음"
+        embed = new Embed(client, 'success')
+          .setTitle(`${interaction.user.id}님의 잔액`)
+          .setDescription(`유저님의 잔액은 아래와 같습니다.`)
+          .addField("잔액 :", `**${comma(wjdqh.money)}원**`)
+          .setColor('#2f3136')
+        interaction.editReply({
+          embeds: [embed]
+        })
+      } else {
+        const wjdqh = await Schema.findOne({ userid: interaction.user.id })
+        embed = new Embed(client, 'success').setTitle(`정보 오류`)
+          .setDescription(`아쉽지만 ${interaction.user}님의 정보가 기록되어있지 않습니다.\n!돈받기 명령어로 정보를 알려주세요.`)
 
-    embed = new Embed(client, 'success').setTitle(`정보 오류`)
-      .setDescription(`아쉽지만 ${interaction.author}님의 정보가 기록되어있지 않아요..ㅠ\n!돈받기 명령어로 정보를 알려주세요!`)
-
-    if (!wjdqh) return interaction.editReply({
-      embeds: [embed]
-    })
-    const t = new Date()
-    const date = "" + t.getFullYear() + t.getMonth() + t.getDate();
-    let i
-    if (wjdqh.date == date) i = "돈을 받음"
-    else i = "돈을 받지않음"
-    embed = new Embed(client, 'success')
-      .setTitle(`${user.tag}님의 잔액`)
-      .setDescription(`유저님의 잔액은 아래와 같습니다.`)
-      .addField("잔액 :", `**${comma(wjdqh.money)}원**`)
-      .setColor('#2f3136')
-    interaction.editReply({
-      embeds: [embed]
-    })
+        if (!wjdqh) return interaction.editReply({
+          embeds: [embed]
+        })
+        const t = new Date()
+        const date = "" + t.getFullYear() + t.getMonth() + t.getDate();
+        let i
+        if (wjdqh.date == date) i = "돈을 받음"
+        else i = "돈을 받지않음"
+        embed = new Embed(client, 'success')
+          .setTitle(`${interaction.user.id}님의 잔액`)
+          .setDescription(`유저님의 잔액은 아래와 같습니다.`)
+          .addField("잔액 :", `**${comma(wjdqh.money)}원**`)
+          .setColor('#2f3136')
+        interaction.editReply({
+          embeds: [embed]
+        })
+      }
     }
   }
 )
