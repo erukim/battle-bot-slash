@@ -63,11 +63,12 @@ export default new BaseCommand(
     let m = await interaction.editReply({
       embeds: [embed]
     })
-    const user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author
+    let user = interaction.options.getUser('user')
+    if (!user) user = interaction.author
     const wjdqh = await Schema.findOne({ userid: user.id })
 
     embed = new Embed(client, 'success').setTitle(`정보 오류`)
-      .setDescription(`아쉽지만 ${message.author}님의 정보가 기록되어있지 않아요..ㅠ\n!돈받기 명령어로 정보를 알려주세요!`)
+      .setDescription(`아쉽지만 ${interaction.author}님의 정보가 기록되어있지 않아요..ㅠ\n!돈받기 명령어로 정보를 알려주세요!`)
 
     if (!wjdqh) return interaction.editReply({
       embeds: [embed]
