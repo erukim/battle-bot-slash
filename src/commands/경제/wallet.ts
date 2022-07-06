@@ -39,5 +39,52 @@ export default new BaseCommand(
     m.edit({
       embeds: [embed]
     })
+  },
+  {
+    // @ts-ignore
+    data: new SlashCommandBuilder()
+      .setName('돈')
+      .setDescription('자신의 돈을 확인합니다.')
+      .addUserOption((user) =>
+        user
+          .setName('user')
+          .setDescription('유저를 적어주세요')
+          .setRequired(true)
+      ),
+    options: {
+      name: '돈',
+      isSlash: true
+    },
+    async execute(client, interaction) {
+      await interaction.deferReply({ ephemeral: true })
+      let embed = new Embed(client, 'warn')
+      .setTitle('처리중..')
+      .setColor('#2f3136')
+    let m = await interaction.editReply({
+      embeds: [embed]
+    })
+    const user = message.mentions.users.first() || client.users.cache.get(args[0]) || message.author
+    const wjdqh = await Schema.findOne({ userid: user.id })
+
+    embed = new Embed(client, 'success').setTitle(`정보 오류`)
+      .setDescription(`아쉽지만 ${message.author}님의 정보가 기록되어있지 않아요..ㅠ\n!돈받기 명령어로 정보를 알려주세요!`)
+
+    if (!wjdqh) return interaction.editReply({
+      embeds: [embed]
+    })
+    const t = new Date()
+    const date = "" + t.getFullYear() + t.getMonth() + t.getDate();
+    let i
+    if (wjdqh.date == date) i = "돈을 받음"
+    else i = "돈을 받지않음"
+    embed = new Embed(client, 'success')
+      .setTitle(`${user.tag}님의 잔액`)
+      .setDescription(`유저님의 잔액은 아래와 같습니다.`)
+      .addField("잔액 :", `**${comma(wjdqh.money)}원**`)
+      .setColor('#2f3136')
+    interaction.editReply({
+      embeds: [embed]
+    })
+    }
   }
 )
