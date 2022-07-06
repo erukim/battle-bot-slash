@@ -66,7 +66,7 @@ export default new BaseCommand(
     })
       let user = interaction.options.getUser('유저', false)
       if (!user) {
-        let user = interaction.user
+        let user = interaction.member
         const wjdqh = await Schema.findOne({ userid: user.id })
         const t = new Date()
         const date = "" + t.getFullYear() + t.getMonth() + t.getDate();
