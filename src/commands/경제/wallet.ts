@@ -1,8 +1,9 @@
-import { BaseCommand } from '../../structures/Command'
+import { BaseCommand, SlashCommand } from '../../structures/Command'
 import Discord from 'discord.js'
 import Embed from '../../utils/Embed'
 import comma from 'comma-number'
 import Schema from '../../schemas/Money'
+import { SlashCommandBuilder, userMention } from '@discordjs/builders'
 
 export default new BaseCommand(
   {
