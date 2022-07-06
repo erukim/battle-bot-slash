@@ -66,15 +66,15 @@ export default new BaseCommand(
     })
       let user = interaction.options.getUser('유저', false)
       if (!user) {
-        let user = interaction.user.id
-        const wjdqh = await Schema.findOne({ userid: interaction.user.id })
+        let user = interaction.user
+        const wjdqh = await Schema.findOne({ userid: user.id })
         const t = new Date()
         const date = "" + t.getFullYear() + t.getMonth() + t.getDate();
         let i
         if (wjdqh.date == date) i = "돈을 받음"
         else i = "돈을 받지않음"
         embed = new Embed(client, 'success')
-          .setTitle(`${interaction.user.id}님의 잔액`)
+          .setTitle(`${user.id}님의 잔액`)
           .setDescription(`유저님의 잔액은 아래와 같습니다.`)
           .addField("잔액 :", `**${comma(wjdqh.money)}원**`)
           .setColor('#2f3136')
